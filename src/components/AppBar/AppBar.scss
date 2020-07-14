@@ -1,0 +1,43 @@
+@import "src/styles/abstracts/variables";
+.app-bar {
+  position: relative;
+  //top: 0;
+  //left: 0;
+  height: 13rem;
+  width: 100%;
+  background-color: rgba($color-primary, 1);
+  box-shadow: 0 .2rem 1rem $color-black;
+
+  &__icon {
+    position: absolute;
+    left: 3rem;
+    top: 3rem;
+    &--image {
+      height: 7rem;
+    }
+  }
+  &__page-title {
+    text-align: center;
+    font-size: 3rem;
+    color: $color-white;
+    line-height: 1;
+    margin-top: 1.8rem;
+  }
+  &__navigation-links {
+    display: flex;
+    transform: translateX(-50%);
+    justify-content: center;
+    flex-direction: row-reverse;
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    width: 100%;
+    &--link {
+      margin: 0 1.5rem;
+    }
+    &--divider {
+      margin: 0 1.5rem;
+      border-left: 1px solid $color-grey-light;
+    }
+  }
+}

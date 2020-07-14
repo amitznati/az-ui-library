@@ -15,7 +15,8 @@ const NavigationLink: React.FC<NavigationLinkProps> = ({
   backgroundColor = 'transparent',
   textColor = styles.whiteColor,
   backgroundColorHover = styles.whiteColor,
-  textColorHover = styles.primaryColor
+  textColorHover = styles.primaryColor,
+  className
 }) => {
   const [isHover, setIsHover] = React.useState(false);
   const customStyle = {
@@ -28,6 +29,7 @@ const NavigationLink: React.FC<NavigationLinkProps> = ({
       className={`navigation__link
       ${size ? `navigation__link--${size}` : ''}
       ${rounded ? 'navigation__link--rounded' : ''}
+      ${className}
       `}
       style={customStyle}
       onMouseOver={() => setIsHover(true)}
