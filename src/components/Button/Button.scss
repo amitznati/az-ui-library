@@ -1,0 +1,128 @@
+@import "src/styles/abstracts/variables";
+.btn {
+  &,
+  &:link,
+  &:visited {
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 1.5rem 4.0rem;
+    display: inline-block;
+    border-radius: 3px;
+    transition: all .2s;
+    position: relative;
+    font-size: 1.6rem;
+    top: 0;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+  }
+  &--large {
+    font-size: 2rem;
+    padding: 2rem 5rem;
+  }
+  &--medium {
+    font-size: 1.6rem;
+    padding: 1.5rem 4rem;
+  }
+  &--small {
+    font-size: 1.2rem;
+    padding: 1rem 3rem;
+  }
+  &--tiny {
+    font-size: .8rem;
+    padding: .5rem 2rem;
+  }
+  &--rounded {
+    border-radius: 100px;
+    &:after {
+      border-radius: 100px;
+    }
+  }
+  &:after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    transition: all .4s;
+  }
+
+  &:hover {
+    top: -.2rem;
+    z-index: 2;
+    box-shadow: $btn-hover-shadow;
+    &::after {
+      transform: scale(1.4, 1.6);
+      opacity: 0;
+    }
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+    transform: translateY(-.1rem);
+    box-shadow: $btn-active-shadow;
+  }
+
+  &-white {
+    color: $color-grey;
+    background-color: $color-white;
+
+    &:after {
+      background-color: $color-white;
+    }
+  }
+
+  &-primary {
+    color: $color-white;
+    background-color: $color-primary;
+
+    &:after {
+      background-color: $color-primary;
+    }
+  }
+
+  &-secondary {
+    color: $color-grey;
+    background-color: $color-secondary;
+
+    &:after {
+      background-color: $color-secondary;
+    }
+  }
+
+  &-animated {
+    animation: moveInBottom .5s ease-out .75s;
+    animation-fill-mode: backwards;
+  }
+}
+
+.btn-text {
+  &,
+  &:link,
+  &:visited {
+    font-size: 1.5rem;
+    color: $color-primary;
+    display: inline-block;
+    text-decoration: none;
+    padding: 3px;
+    transition: all .2s;
+    cursor: pointer;
+  }
+  &:hover {
+    background-color: $color-primary;
+    color: $color-white;
+    transform: translateY(-.3rem);
+    box-shadow: $btn-hover-shadow;
+  }
+  &:active {
+    background-color: $color-primary;
+    color: $color-white;
+    transform: translateY(-.1rem);
+    box-shadow: $btn-active-shadow;
+  }
+
+}

@@ -1,0 +1,45 @@
+
+.story-wrap {
+  padding: 3rem;
+  @include respond(tab-port){ //width < 900px
+    padding: 0;
+  }
+}
+.buttons-stories {
+  text-align: center;
+  & div .btn {
+    margin: 1rem;
+  }
+  & div p {
+    margin: 1rem;
+    font-size: 1.4rem;
+  }
+}
+
+.navigation-stories {
+  text-align: center;
+  & div .navigation__link {
+    margin: 1rem;
+  }
+  & div p {
+    margin: 1rem;
+    font-size: 1.4rem;
+  }
+}
+
+.animation-all-wrap {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.animation-div {
+  height: 10rem;
+  width: 10rem;
+  background-color: $color-primary;
+  color: $color-white;
+  text-align: center;
+  margin: 3rem;
+}
+
