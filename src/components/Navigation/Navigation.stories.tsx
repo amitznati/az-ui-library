@@ -7,5 +7,11 @@ export default {
   component: Navigation
 };
 export const fullscreenNavigation = () => {
-  return <Navigation />;
+  const navigationLinks = [
+    { title: 'בית', to: '#' },
+    { title: 'זמני היום', to: '#' },
+    { title: 'תפילה קרובה', to: '#' },
+    { title: 'אודות', to: '#' }
+  ];
+  return <Navigation navigationLinks={navigationLinks} />;
 };

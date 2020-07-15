@@ -4,6 +4,10 @@
   @include respond(tab-port){ //width < 900px
     padding: 0;
   }
+  &-AppBar {
+    padding: 0;
+    height: 1500px;
+  }
 }
 .buttons-stories {
   text-align: center;

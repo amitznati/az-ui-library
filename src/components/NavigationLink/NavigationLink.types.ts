@@ -8,4 +8,5 @@ export interface NavigationLinkProps {
   rounded?: boolean;
   className?: string;
   linkTo: string;
+  active?: boolean;
 }

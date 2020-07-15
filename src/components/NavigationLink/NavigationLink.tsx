@@ -16,21 +16,25 @@ const NavigationLink: React.FC<NavigationLinkProps> = ({
   textColor = styles.whiteColor,
   backgroundColorHover = styles.whiteColor,
   textColorHover = styles.primaryColor,
-  className
+  className,
+  active
 }) => {
   const [isHover, setIsHover] = React.useState(false);
   const customStyle = {
-    color: isHover ? textColorHover : textColor,
+    color: isHover || active ? textColorHover : textColor,
     backgroundImage: `linear-gradient(120deg, ${backgroundColor} 0%, ${backgroundColor} 50%, ${backgroundColorHover} 51%)`
   };
+  const cls = [
+    'navigation__link',
+    size ? `navigation__link--${size}` : '',
+    rounded ? 'navigation__link--rounded' : '',
+    active ? ' active' : '',
+    className
+  ];
   return (
     <a
       href={linkTo}
-      className={`navigation__link
-      ${size ? `navigation__link--${size}` : ''}
-      ${rounded ? 'navigation__link--rounded' : ''}
-      ${className}
-      `}
+      className={cls.join(' ')}
       style={customStyle}
       onMouseOver={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
