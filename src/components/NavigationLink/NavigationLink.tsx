@@ -2,8 +2,6 @@ import React from 'react';
 
 // eslint-disable-next-line no-unused-vars
 import { NavigationLinkProps } from './NavigationLink.types';
-// @ts-ignore
-import styles from '../../styles/abstracts/_variables.scss';
 
 import './NavigationLink.scss';
 
@@ -13,9 +11,9 @@ const NavigationLink: React.FC<NavigationLinkProps> = ({
   size = 'medium',
   rounded,
   backgroundColor = 'transparent',
-  textColor = styles.whiteColor,
-  backgroundColorHover = styles.whiteColor,
-  textColorHover = styles.primaryColor,
+  textColor = '#ffffff',
+  backgroundColorHover = '#ffffff',
+  textColorHover = '#8e3032',
   className,
   active
 }) => {
