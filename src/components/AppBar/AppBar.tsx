@@ -9,7 +9,7 @@ import Navigation from '../Navigation/Navigation';
 const AppBar: React.FC<AppBarProps> = ({ logoSrc, title, navigationLinks }) => {
   const [navigationClass, setNavigationClass] = React.useState('');
   const myScrollFunc = () => {
-    setNavigationClass(window.scrollY > 100 ? 'shown' : '');
+    setNavigationClass(window.scrollY > 160 ? 'shown' : '');
   };
   React.useEffect(() => {
     window.addEventListener('scroll', myScrollFunc);
