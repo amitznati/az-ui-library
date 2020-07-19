@@ -12,9 +12,7 @@
     //width: 90%;
     margin: auto;
     overflow: hidden;
-    box-shadow: 0 .2rem 2rem rgba(0, 0, 0, 0.1);
     border-radius: 1rem;
-    background: $color-white;
     max-width: 120rem;
   }
 
@@ -70,8 +68,6 @@
   font-size: 1.8rem;
   box-sizing: border-box;
   color: $color-primary-dark;
-  position: relative;
-  z-index: 1;
   width: calc(100% / 7 - 6px);
   display: inline-flex;
   flex-direction: column;

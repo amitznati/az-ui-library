@@ -47,3 +47,12 @@
   margin: 3rem;
 }
 
+.cards-swift-stories {
+  &-buttons {
+    span {
+      font-size: 3rem;
+      padding: 6rem;
+      cursor: pointer;
+    }
+  }
+}

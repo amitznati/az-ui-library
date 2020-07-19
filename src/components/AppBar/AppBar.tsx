@@ -28,7 +28,7 @@ const AppBar: React.FC<AppBarProps> = ({ logoSrc, title, navigationLinks }) => {
             size="small"
             className="app-bar__navigation-links--link"
             linkTo={link.to}
-            active={link.title === 'זמני היום'}
+            active={link.active}
           >
             {link.title}
           </NavigationLink>
