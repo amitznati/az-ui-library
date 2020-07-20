@@ -20,22 +20,22 @@ const CardsSwift: React.FC<CardsSwiftProps> = ({
     startPoint: { x: 0 },
     moving: false
   });
-  const stopMoving = () => {
+  const stopMoving = (): void => {
     setState({
       startPoint: { x: 0 },
       moving: false
     });
   };
-  const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+  const onTouchStart = (e: React.TouchEvent<HTMLDivElement>): void => {
     setState({
       startPoint: { x: e.touches[0].pageX },
       moving: true
     });
   };
-  const onTouchEnd = () => {
+  const onTouchEnd = (): void => {
     stopMoving();
   };
-  const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+  const onTouchMove = (e: React.TouchEvent<HTMLDivElement>): void => {
     if (state.moving) {
       if (e.touches[0].pageX - state.startPoint.x > 100) {
         stopMoving();

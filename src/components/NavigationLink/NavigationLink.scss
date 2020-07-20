@@ -34,10 +34,12 @@
   &--rounded {
     border-radius: 100px;
   }
-  &:hover {
-    background-position: 100%;
-    color: $color-primary;
-    box-shadow: $btn-active-shadow;
+  @media (hover: hover) {
+    &:hover {
+      background-position: 100%;
+      color: $color-primary;
+      box-shadow: $btn-active-shadow;
+    }
   }
   &:active {
     background-position: 100%;

@@ -49,14 +49,16 @@
     z-index: -1;
     transition: all .4s;
   }
+  @media (hover: hover) {
+    &:hover {
+      top: -.2rem;
+      z-index: 2;
+      box-shadow: $btn-hover-shadow;
 
-  &:hover {
-    top: -.2rem;
-    z-index: 2;
-    box-shadow: $btn-hover-shadow;
-    &::after {
-      transform: scale(1.4, 1.6);
-      opacity: 0;
+      &::after {
+        transform: scale(1.4, 1.6);
+        opacity: 0;
+      }
     }
   }
 
@@ -112,11 +114,13 @@
     transition: all .2s;
     cursor: pointer;
   }
-  &:hover {
-    background-color: $color-primary;
-    color: $color-white;
-    transform: translateY(-.3rem);
-    box-shadow: $btn-hover-shadow;
+  @media (hover: hover) {
+    &:hover {
+      background-color: $color-primary;
+      color: $color-white;
+      transform: translateY(-.3rem);
+      box-shadow: $btn-hover-shadow;
+    }
   }
   &:active {
     background-color: $color-primary;

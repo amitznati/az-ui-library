@@ -14,8 +14,8 @@ export default {
 export const CardsSwiftDemo = () => {
   const data = [];
   for (let i = 0; i < 100; i += 1) data.push(i);
-  const [activeIndex, setActiveIndex] = React.useState(5);
-  const renderItem = (item: JSX.Element, index: number): JSX.Element => {
+  const [activeIndex, setActiveIndex] = React.useState(50);
+  const renderItem = (item: JSX.Element): JSX.Element => {
     return (
       <div
         style={{
@@ -26,10 +26,10 @@ export const CardsSwiftDemo = () => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          fontSize: '10rem'
+          fontSize: '5rem'
         }}
       >
-        {item} - {index}
+        item {item} - out of 100
       </div>
     );
   };
