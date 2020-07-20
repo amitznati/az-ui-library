@@ -12,7 +12,8 @@ export default {
 };
 
 export const CardsSwiftDemo = () => {
-  const data = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const data = [];
+  for (let i = 0; i < 100; i += 1) data.push(i);
   const [activeIndex, setActiveIndex] = React.useState(5);
   const renderItem = (item: JSX.Element, index: number): JSX.Element => {
     return (
@@ -38,6 +39,9 @@ export const CardsSwiftDemo = () => {
         data={data}
         renderItem={renderItem}
         activeIndex={activeIndex}
+        onSwiftLeft={() => setActiveIndex(activeIndex + 1)}
+        onSwiftRight={() => setActiveIndex(activeIndex - 1)}
+        height={400}
       />
       <div className="cards-swift-stories-buttons">
         <span onClick={() => setActiveIndex(activeIndex + 1)}>+</span>
