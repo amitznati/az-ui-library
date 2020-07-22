@@ -5,7 +5,8 @@ import { monthsArrayHe, heDaysLong } from './constants';
 import CardsSwift from '../CardsSwift/CardsSwift';
 import './Calender.scss';
 
-const getEventText = async (heDate: HeDay): Promise<string | undefined> => {
+window.Hebcal = Hebcal;
+const getEventText = (heDate: HeDay): string | undefined => {
   const events = heDate.holidays(true);
   const newEvent = events.filter(
     (e: HeEvent) => (heDate.il && !e.CHUL_ONLY) || !heDate.il
@@ -52,14 +53,20 @@ const CalenderDay: React.FC<CalenderDayProps> = ({ day, onSelect }) => {
 // };
 
 const renderCalenderMonth = (month: Month): JSX.Element => {
-  console.log('render calender');
+  let calendarDayIndex = 1 - month.days[0].getDay();
   return (
     <div className="calendar-month">
-      {[0, 1, 2, 3, 4].map((week) => (
+      {[0, 1, 2, 3, 4, 5].map((week) => (
         <div key={`week-${week}`} className="calendar-week">
           {[0, 1, 2, 3, 4, 5, 6].map((day) => {
-            const d = month.days[day + week * 7];
-            return <CalenderDay key={`day-${day}`} day={d} />;
+            const d = month.days[calendarDayIndex];
+            calendarDayIndex += 1;
+            const key = ['day', month.month, week, day].join('-');
+            return d ? (
+              <CalenderDay key={key} day={d} />
+            ) : (
+              <div className="day" key={key} />
+            );
           })}
         </div>
       ))}
@@ -68,7 +75,6 @@ const renderCalenderMonth = (month: Month): JSX.Element => {
 };
 
 const renderCalenderPlaceHolder = (): JSX.Element => {
-  console.log('render PlaceHolder');
   return (
     <div className="calendar-month">
       {[0, 1, 2, 3, 4].map((week) => (
@@ -97,14 +103,13 @@ const Calender: React.FC<{}> = () => {
     }
   };
   const moveMontDown = (): void => {
-    if (activeMonth - 5 < months.length) {
+    setActiveMonth(activeMonth - 1);
+    if (activeMonth <= 0) {
       setMonths([
         ...new Hebcal.GregYear(months[activeMonth].year - 1).months,
         ...months
       ]);
       setActiveMonth(activeMonth + 11);
-    } else {
-      setActiveMonth(activeMonth - 1);
     }
   };
   return (
@@ -141,7 +146,7 @@ const Calender: React.FC<{}> = () => {
           // renderPlaceHolderItem={renderCalenderPlaceHolder}
           onSwiftLeft={moveMonthUp}
           onSwiftRight={moveMontDown}
-          height="calc(5*13rem)"
+          height="calc(6*13rem)"
         />
         <div className="cards-swift-stories-buttons">
           <span onClick={moveMonthUp}>+</span>

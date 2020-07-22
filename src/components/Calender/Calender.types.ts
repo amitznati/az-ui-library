@@ -20,6 +20,7 @@ export interface HeDay {
   next: () => HeDay;
   greg: () => Date;
   holidays: (isAll: boolean) => Array<HeEvent>;
+  getDay: () => number;
 }
 export interface HeEvent {
   date: HeDay;
