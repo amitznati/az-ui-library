@@ -68,7 +68,6 @@ const CardsSwift: React.FC<CardsSwiftProps> = ({
       }`
     };
   };
-
   return (
     <div style={{ height }} className="cards-swift-container">
       <div className="cards-swift">
@@ -82,7 +81,7 @@ const CardsSwift: React.FC<CardsSwiftProps> = ({
               onTouchEnd={onTouchEnd}
               onTouchMove={onTouchMove}
             >
-              {renderItem(item, i)}
+              {renderItem(item, i, activeIndex)}
             </div>
           )
         )}

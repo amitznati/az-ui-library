@@ -16,7 +16,7 @@ const AppBar: React.FC<AppBarProps> = ({ logoSrc, title, navigationLinks }) => {
     return () => window.removeEventListener('scroll', myScrollFunc);
   });
   return (
-    <div className="app-bar" onScrollCapture={() => console.log('scroll')}>
+    <div className="app-bar">
       <div className="app-bar__icon">
         <img src={logoSrc} className="app-bar__icon--image" alt="logo" />
       </div>

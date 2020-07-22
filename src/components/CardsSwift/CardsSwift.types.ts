@@ -1,8 +1,13 @@
 export interface CardsSwiftProps {
   activeIndex: number;
   data: Array<any>;
-  renderItem: (item: JSX.Element, index: number) => JSX.Element;
-  height: number;
+  renderItem: (item: any, index: number, activeIndex: number) => JSX.Element;
+  renderPlaceHolderItem?: (
+    item: any,
+    index: number,
+    activeIndex: number
+  ) => JSX.Element;
+  height: number | string;
   onSwiftRight: () => void;
   onSwiftLeft: () => void;
 }
