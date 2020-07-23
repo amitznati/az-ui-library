@@ -10,7 +10,8 @@ const CardsSwift: React.FC<CardsSwiftProps> = ({
   renderItem,
   height,
   onSwiftRight,
-  onSwiftLeft
+  onSwiftLeft,
+  renderPlaceHolderItem
 }) => {
   // const getItemClass = (index: number) =>
   //   activeIndex - index >= 0
@@ -81,7 +82,9 @@ const CardsSwift: React.FC<CardsSwiftProps> = ({
               onTouchEnd={onTouchEnd}
               onTouchMove={onTouchMove}
             >
-              {renderItem(item, i, activeIndex)}
+              {renderPlaceHolderItem && Math.abs(activeIndex - i) > 1
+                ? renderPlaceHolderItem(item, i, activeIndex)
+                : renderItem(item, i, activeIndex)}
             </div>
           )
         )}

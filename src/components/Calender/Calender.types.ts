@@ -21,6 +21,7 @@ export interface HeDay {
   greg: () => Date;
   holidays: (isAll: boolean) => Array<HeEvent>;
   getDay: () => number;
+  eventText?: string;
 }
 export interface HeEvent {
   date: HeDay;
