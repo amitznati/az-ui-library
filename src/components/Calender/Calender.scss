@@ -8,43 +8,39 @@
   align-items: stretch;
   width: 100%;
 
+
   &-container {
-    //width: 90%;
     margin: auto;
     overflow: hidden;
     border-radius: 1rem;
-    max-width: 120rem;
+    max-width: 55rem;
+    background-image: linear-gradient(to bottom, $color-primary 0%, rgba($color-primary-dark, 0.8) 100%);
   }
 
   &-header {
     text-align: center;
-    padding: 2rem 0;
-    background: linear-gradient(to bottom, $color-primary 0%, rgba($color-primary-dark, 0.8) 100%);
-
+    padding: 1rem 0;
+    font-size: 1.8rem;
+    color: $color-white;
+    line-height: 1.4;
     &-month {
       cursor: pointer;
+      margin: 0 0 0 1rem;
     }
     &-year {
       cursor: pointer;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 1.8rem;
-      color: $color-white;
-    }
-
-    p {
-      margin: .5rem 0 0 0;
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: rgba($color-white, .8);
     }
   }
 
   &-week {
     display: flex;
     justify-content: center;
+    &-days {
+      background-color: $color-white;
+      padding: 0 4rem;
+      margin-bottom: 1rem;
+      box-shadow: $btn-hover-shadow;
+    }
   }
   &-month {
     background-color: $color-white;
@@ -52,7 +48,7 @@
     border-radius: .6rem;
     box-shadow: $btn-active-shadow;
     &.placeholder {
-      height: 75rem;
+      height: 51.5rem;
       @include respond(phone) {
         height: 49rem;
       }
@@ -65,21 +61,22 @@
   border-bottom: 1px solid rgba($color-primary-dark, 0.12);
   border-right: 1px solid rgba($color-primary-dark, 0.12);
   text-align: right;
-  padding: 1rem 2rem;
+  padding: 1rem;
   letter-spacing: 1px;
   background-color: $color-white;
-  font-size: 1.8rem;
+  font-size: 1.2rem;
   box-sizing: border-box;
   color: $color-primary-dark;
   width: calc(100% / 7 - .6rem);
   display: inline-flex;
   flex-direction: column;
-  height: 12rem;
+  height: 8rem;
   margin: .2rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
   cursor: pointer;
   line-height: 1.2;
-  overflow-wrap: break-spaces;
+  word-break: break-all;
+  overflow: hidden;
 
   @include respond(tab-port){
     padding: 1rem;
@@ -90,8 +87,8 @@
     margin: 0;
     box-shadow: none;
     width: calc(100% / 7);
-    font-size: 1.2rem;
-    height: 8rem;
+    //font-size: 1.2rem;
+    //height: 8rem;
     letter-spacing: unset;
   }
 
@@ -112,9 +109,9 @@
     text-transform: uppercase;
     color: $color-primary-dark;
     text-align: center;
-    border-bottom: 1px solid rgba($color-primary-dark, 0.12);
     line-height: 5rem;
-    font-weight: 400;
+    font-weight: 700;
+    letter-spacing: .1rem;
     width: calc(100% / 7);
   }
 

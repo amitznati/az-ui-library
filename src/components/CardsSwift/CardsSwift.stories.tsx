@@ -50,6 +50,7 @@ export const CardsSwiftDemo = () => {
         onSwiftLeft={moveUp}
         onSwiftRight={moveDown}
         height={400}
+        itemToShow={5}
       />
       <div className="cards-swift-stories-buttons">
         <span onClick={moveUp}>+</span>

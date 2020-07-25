@@ -1,7 +1,7 @@
 import React from 'react';
 import Hebcal from 'hebcal';
 import { Month, HeDay, HeEvent } from './Calender.types';
-import { monthsArrayHe, heDaysLong } from './constants';
+import { monthsArrayHe, heDaysLong, monthsArrayTranslate } from './constants';
 import CardsSwift from '../CardsSwift/CardsSwift';
 import './Calender.scss';
 
@@ -28,48 +28,9 @@ const getEventText = (
   }
   return text;
 };
-// const CalenderDay: React.FC<CalenderDayProps> = ({ day, onSelect }) => {
-//   const className = [
-//     'day'
-//     // day.isDisable ? 'day--disabled' : '',
-//     // day.isSelected ? 'day--selected' : '',
-//     // day.isToday ? 'day--today' : ''
-//   ];
-//   return (
-//     <div
-//       onClick={onSelect && day ? (): void => onSelect(day) : undefined}
-//       className={className.join(' ')}
-//     >
-//       <span>{day ? day.greg().getDate() : ''}</span>
-//       <span>{day ? Hebcal.gematriya(day.day) : ''}</span>
-//       <span>{day ? getEventText(day) : ''}</span>
-//     </div>
-//   );
-// };
-// const CalenderWeek: React.FC<CalenderProps> = ({ week, onSelectDate }) => {
-//   return (
-//     <div className="calendar-week">
-//       {week.map((day) => (
-//         <CalenderDay key={day.date.day} {...{ day, onSelectDate }} />
-//       ))}
-//     </div>
-//   );
-// };
 
 const renderCalenderPlaceHolder = (): JSX.Element => {
-  return (
-    <div className="calendar-month placeholder">
-      {/* {[0, 1, 2, 3, 4].map((week) => ( */}
-      {/*  <div key={`week-${week}`} className="calendar-week"> */}
-      {/*    {[0, 1, 2, 3, 4, 5, 6].map((day) => ( */}
-      {/*      <div className="day" key={`day-${day}`}> */}
-      {/*        &nbsp; */}
-      {/*      </div> */}
-      {/*    ))} */}
-      {/*  </div> */}
-      {/* ))} */}
-    </div>
-  );
+  return <div className="calendar-month placeholder">&nbsp;</div>;
 };
 
 const Calender: React.FC<{}> = () => {
@@ -78,13 +39,14 @@ const Calender: React.FC<{}> = () => {
   const [months, setMonths] = React.useState(year.months);
   const [holidays, setHolidays] = React.useState(year.holidays);
   // TESTING
-  const [time, setTime] = React.useState(new Date());
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+  // const [time, setTime] = React.useState(new Date());
+  // React.useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setTime(new Date());
+  //   }, 1000);
+  //   return () => clearInterval(interval);
+  // }, []);
+  // END
   const moveMonthUp = (): void => {
     setActiveMonth(activeMonth + 1);
     if (activeMonth + 5 > months.length) {
@@ -109,7 +71,14 @@ const Calender: React.FC<{}> = () => {
     }
   };
   const renderCalenderMonth = (month: Month): JSX.Element => {
-    let calendarDayIndex = 0 - month.days[0].getDay();
+    let calendarDayIndex = -month.days[0].getDay();
+    // const days = [];
+    // // Array<HeDay>;
+    // for (let i = calendarDayIndex; i > 0; i += 1) {
+    //   days.push(
+    //     months[activeMonth - 1].days[months[activeMonth - 1].length + i]
+    //   );
+    // }
     return (
       <div className="calendar-month">
         {[0, 1, 2, 3, 4, 5].map((week) => (
@@ -125,7 +94,7 @@ const Calender: React.FC<{}> = () => {
                   <span>{getEventText(holidays[day.toString()], day)}</span>
                 </div>
               ) : (
-                <div className="day" key={key} />
+                <div className="day day--disabled" key={key} />
               );
             })}
           </div>
@@ -133,15 +102,38 @@ const Calender: React.FC<{}> = () => {
       </div>
     );
   };
+  const getHeMonthName = () => {
+    const hebmonths = months[activeMonth].hebmonths.map(
+      (heMonth) => monthsArrayHe[heMonth.month - 1]
+    );
+    return hebmonths.join(hebmonths.length > 1 ? '-' : '');
+  };
+  const getHeYearName = () => {
+    const heyears = months[activeMonth].hebmonths.map((heMonth) =>
+      Hebcal.gematriya(heMonth.year)
+    );
+    if (heyears.length > 1 && heyears[0] !== heyears[1]) {
+      return heyears.join('-');
+    }
+    return heyears[0];
+  };
   return (
     <div className="calendar-container">
-      <h1>{time.toISOString()}</h1>
+      {/* <h1>{time.toISOString()}</h1> */}
       <div className="calendar-main">
         <div className="calendar-header">
-          <span className="calendar-header-month">
-            {monthsArrayHe[activeMonth % 12]}
-          </span>
-          <p className="calendar-header-year">{months[activeMonth].year}</p>
+          <div>
+            <span className="calendar-header-month">
+              {monthsArrayTranslate[months[activeMonth].month - 1]}
+            </span>
+            <span className="calendar-header-year">
+              {months[activeMonth].year}
+            </span>
+          </div>
+          <div>
+            <span className="calendar-header-month">{getHeMonthName()}</span>
+            <span className="calendar-header-year">{getHeYearName()}</span>
+          </div>
         </div>
         <div className="calendar-week calendar-week-days">
           {heDaysLong.map((day) => (
@@ -157,7 +149,8 @@ const Calender: React.FC<{}> = () => {
           renderPlaceHolderItem={renderCalenderPlaceHolder}
           onSwiftLeft={moveMonthUp}
           onSwiftRight={moveMontDown}
-          height="calc(6*13rem)"
+          height="52rem"
+          itemToShow={3}
         />
         <div className="cards-swift-stories-buttons">
           <span onClick={moveMonthUp}>+</span>

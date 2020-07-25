@@ -12,6 +12,20 @@ export const monthsArray = [
   'Nov',
   'Dec'
 ];
+export const monthsArrayTranslate = [
+  'ינואר',
+  'בפרואר',
+  'מרץ',
+  'אפריל',
+  'מאי',
+  'יוני',
+  'יולי',
+  'אוגוסט',
+  'ספטמבר',
+  'אוקטובר',
+  'נובמבר',
+  'דצמבר'
+];
 export const monthsArrayHe = [
   'ניסן',
   'אייר',

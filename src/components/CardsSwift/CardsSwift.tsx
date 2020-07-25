@@ -11,7 +11,8 @@ const CardsSwift: React.FC<CardsSwiftProps> = ({
   height,
   onSwiftRight,
   onSwiftLeft,
-  renderPlaceHolderItem
+  renderPlaceHolderItem,
+  itemToShow = 5
 }) => {
   // const getItemClass = (index: number) =>
   //   activeIndex - index >= 0
@@ -48,10 +49,10 @@ const CardsSwift: React.FC<CardsSwiftProps> = ({
     }
   };
   const getItemStyle = (index: number): CSSProperties => {
-    const ratio = Math.abs(activeIndex - index);
+    const ratio = Math.min(itemToShow, Math.abs(activeIndex - index));
     const isBig = index > activeIndex;
     return {
-      opacity: `${1 - ratio * 0.2}`,
+      opacity: `${1 - ratio * 0.1}`,
       left: `${
         ratio !== 0
           ? `calc(${isBig ? '-' : ''}5px + ${
@@ -73,7 +74,7 @@ const CardsSwift: React.FC<CardsSwiftProps> = ({
     <div style={{ height }} className="cards-swift-container">
       <div className="cards-swift">
         {data.map((item, i) =>
-          Math.abs(activeIndex - i) > 5 ? null : (
+          Math.abs(activeIndex - i) > itemToShow + 1 ? null : (
             <div
               key={`cards-swift-card-${i}`}
               className="cards-swift--item"
@@ -82,7 +83,7 @@ const CardsSwift: React.FC<CardsSwiftProps> = ({
               onTouchEnd={onTouchEnd}
               onTouchMove={onTouchMove}
             >
-              {renderPlaceHolderItem && Math.abs(activeIndex - i) > 1
+              {renderPlaceHolderItem && Math.abs(activeIndex - i) > 2
                 ? renderPlaceHolderItem(item, i, activeIndex)
                 : renderItem(item, i, activeIndex)}
             </div>
