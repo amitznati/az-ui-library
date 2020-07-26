@@ -41,10 +41,10 @@ const CardsSwift: React.FC<CardsSwiftProps> = ({
     if (state.moving) {
       if (e.touches[0].pageX - state.startPoint.x > 100) {
         stopMoving();
-        onSwiftLeft();
+        onSwiftLeft && onSwiftLeft();
       } else if (e.touches[0].pageX - state.startPoint.x < -100) {
         stopMoving();
-        onSwiftRight();
+        onSwiftRight && onSwiftRight();
       }
     }
   };
@@ -79,11 +79,11 @@ const CardsSwift: React.FC<CardsSwiftProps> = ({
               key={`cards-swift-card-${i}`}
               className="cards-swift--item"
               style={getItemStyle(i)}
-              onTouchStart={onTouchStart}
-              onTouchEnd={onTouchEnd}
-              onTouchMove={onTouchMove}
+              onTouchStart={onSwiftLeft && onSwiftRight && onTouchStart}
+              onTouchEnd={onSwiftLeft && onSwiftRight && onTouchEnd}
+              onTouchMove={onSwiftLeft && onSwiftRight && onTouchMove}
             >
-              {renderPlaceHolderItem && Math.abs(activeIndex - i) > 2
+              {renderPlaceHolderItem && Math.abs(activeIndex - i) > 1
                 ? renderPlaceHolderItem(item, i, activeIndex)
                 : renderItem(item, i, activeIndex)}
             </div>

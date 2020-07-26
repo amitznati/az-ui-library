@@ -11,6 +11,9 @@ export default {
   ]
 };
 
+const data: Array<number> = [];
+for (let i = 0; i < 100; i += 1) data.push(i);
+
 const renderItem = (item: JSX.Element, index: number): JSX.Element => {
   return (
     <div
@@ -32,8 +35,6 @@ const renderItem = (item: JSX.Element, index: number): JSX.Element => {
 };
 
 export const CardsSwiftDemo = () => {
-  const data = [];
-  for (let i = 0; i < 100; i += 1) data.push(i);
   const [activeIndex, setActiveIndex] = React.useState(50);
   const moveUp = (): void => {
     setActiveIndex(activeIndex + 1);
@@ -61,8 +62,6 @@ export const CardsSwiftDemo = () => {
 };
 
 export const FullScreen = () => {
-  const data = [];
-  for (let i = 0; i < 100; i += 1) data.push(i);
   const [activeIndex, setActiveIndex] = React.useState(50);
   const moveUp = (): void => {
     setActiveIndex(activeIndex + 1);

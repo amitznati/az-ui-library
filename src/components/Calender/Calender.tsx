@@ -60,7 +60,7 @@ const Calender: React.FC<{}> = () => {
   };
   const moveMontDown = (): void => {
     setActiveMonth(activeMonth - 1);
-    if (activeMonth <= 0) {
+    if (activeMonth <= 1) {
       const newYear = new Hebcal.GregYear(months[activeMonth].year - 1);
       setMonths([...newYear.months, ...months]);
       setHolidays({
@@ -72,29 +72,39 @@ const Calender: React.FC<{}> = () => {
   };
   const renderCalenderMonth = (month: Month): JSX.Element => {
     let calendarDayIndex = -month.days[0].getDay();
-    // const days = [];
-    // // Array<HeDay>;
-    // for (let i = calendarDayIndex; i > 0; i += 1) {
-    //   days.push(
-    //     months[activeMonth - 1].days[months[activeMonth - 1].length + i]
-    //   );
-    // }
+    const days: Array<HeDay> = [];
+    for (let i = calendarDayIndex; i < 0; i += 1) {
+      days.push(
+        months[activeMonth - 1].days[months[activeMonth - 1].length + i]
+      );
+    }
+    days.push(...month.days);
+    for (
+      let i = 0;
+      i < 42 - (month.length + Math.abs(calendarDayIndex));
+      i += 1
+    ) {
+      days.push(months[activeMonth + 1].days[i]);
+    }
+    calendarDayIndex = 0;
     return (
       <div className="calendar-month">
         {[0, 1, 2, 3, 4, 5].map((week) => (
           <div key={`week-${week}`} className="calendar-week">
             {[0, 1, 2, 3, 4, 5, 6].map((d) => {
-              const day = month.days[calendarDayIndex];
+              const day = days[calendarDayIndex];
               calendarDayIndex += 1;
               const key = ['day', month.month, week, d].join('-');
-              return day ? (
-                <div key={key} className="day">
-                  <span>{calendarDayIndex}</span>
+              const classNames = [
+                'day',
+                day.greg().getMonth() !== month.month - 1 ? 'day--disabled' : ''
+              ];
+              return (
+                <div key={key} className={classNames.join(' ')}>
+                  <span>{day.greg().getDate()}</span>
                   <span>{Hebcal.gematriya(day.day)}</span>
                   <span>{getEventText(holidays[day.toString()], day)}</span>
                 </div>
-              ) : (
-                <div className="day day--disabled" key={key} />
               );
             })}
           </div>
