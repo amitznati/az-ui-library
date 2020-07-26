@@ -8,6 +8,9 @@
   align-items: stretch;
   width: 100%;
 
+  &-main {
+
+  }
 
   &-container {
     margin: auto;
@@ -23,8 +26,19 @@
     font-size: 1.8rem;
     color: $color-white;
     line-height: 1.4;
+
     &-month {
-      cursor: pointer;
+      display: inline-block;
+      width: 40%;
+      .arrow-up {
+        transform: rotate(180deg);
+        float: left;
+      }
+      .arrow-down {
+        float: right;
+      }
+      &-text {
+      }
       &-he {
         margin: 0 0 0 1rem;
       }
@@ -50,6 +64,10 @@
     border-radius: .6rem;
     box-shadow: $btn-active-shadow;
     overflow: hidden;
+
+    &-container {
+      margin: 1rem 0;
+    }
     @include respond(phone) {
       padding: 0;
     }
@@ -61,7 +79,6 @@
     }
   }
 }
-
 
 .day {
   border-bottom: 1px solid rgba($color-primary-dark, 0.12);

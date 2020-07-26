@@ -4,6 +4,9 @@ import { Month, HeDay, HeEvent } from './Calender.types';
 import { monthsArrayHe, heDaysLong, monthsArrayTranslate } from './constants';
 import CardsSwift from '../CardsSwift/CardsSwift';
 import './Calender.scss';
+import IconButton from '../IconButton/IconButton';
+
+import {ReactComponent as ArrowIcon} from '../../styles/assets/icons/arrow_forward_ios-24px.svg';
 
 // window.Hebcal = Hebcal;
 
@@ -58,7 +61,7 @@ const Calender: React.FC<{}> = () => {
       });
     }
   };
-  const moveMontDown = (): void => {
+  const moveMonthDown = (): void => {
     setActiveMonth(activeMonth - 1);
     if (activeMonth <= 1) {
       const newYear = new Hebcal.GregYear(months[activeMonth].year - 1);
@@ -134,17 +137,39 @@ const Calender: React.FC<{}> = () => {
         <div className="calendar-header">
           <div>
             <div>
-              <span className="calendar-header-year">
-                <span onClick={moveMonthUp}>{`<`}</span>
-                {months[activeMonth].year}
-                <span onClick={moveMontDown}>{`>`}</span>
+              <span className="calendar-header-month">
+                <IconButton
+                  onClick={moveMonthUp}
+                  IconSrc={ArrowIcon}
+                  size={24}
+                  className="arrow-up"
+                />
+                <span>{months[activeMonth].year}</span>
+                <IconButton
+                  onClick={moveMonthDown}
+                  IconSrc={ArrowIcon}
+                  size={24}
+                  className="arrow-down"
+                />
               </span>
             </div>
             <div>
               <span className="calendar-header-month">
-                <span onClick={moveMonthUp}>{`<`}</span>
-                {monthsArrayTranslate[months[activeMonth].month - 1]}
-                <span onClick={moveMontDown}>{`>`}</span>
+                <IconButton
+                  onClick={moveMonthUp}
+                  IconSrc={ArrowIcon}
+                  size={24}
+                  className="arrow-up"
+                />
+                <span className="calendar-header-month-text">
+                  {monthsArrayTranslate[months[activeMonth].month - 1]}
+                </span>
+                <IconButton
+                  onClick={moveMonthDown}
+                  IconSrc={ArrowIcon}
+                  size={24}
+                  className="arrow-down"
+                />
               </span>
             </div>
           </div>
@@ -160,16 +185,18 @@ const Calender: React.FC<{}> = () => {
             </span>
           ))}
         </div>
-        <CardsSwift
-          data={months}
-          activeIndex={activeMonth}
-          renderItem={renderCalenderMonth}
-          renderPlaceHolderItem={renderCalenderPlaceHolder}
-          onSwiftLeft={moveMonthUp}
-          onSwiftRight={moveMontDown}
-          height="52rem"
-          itemToShow={3}
-        />
+        <div className="calendar-month-container">
+          <CardsSwift
+            data={months}
+            activeIndex={activeMonth}
+            renderItem={renderCalenderMonth}
+            renderPlaceHolderItem={renderCalenderPlaceHolder}
+            onSwiftLeft={moveMonthUp}
+            onSwiftRight={moveMonthDown}
+            height="52rem"
+            itemToShow={3}
+          />
+        </div>
       </div>
     </div>
   );

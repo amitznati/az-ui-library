@@ -1,0 +1,30 @@
+@import "src/styles/abstracts/variables";
+
+.icon-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  line-height: 1;
+  background-image: linear-gradient(120deg, transparent 0%, transparent 50%, $color-white 51%);
+  background-size: 250%;
+  transition: all 1s cubic-bezier(.2,.68,.09,1);
+  cursor: pointer;
+
+  & svg {
+    transition: all 1s cubic-bezier(.2,.68,.09,1);
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background-position: 100%;
+      color: $color-primary;
+      box-shadow: $btn-active-shadow;
+    }
+  }
+  &:active {
+    background-position: 100%;
+    color: $color-primary;
+    box-shadow: 0 .2rem 0 rgba($color-black,.4);
+  }
+}
