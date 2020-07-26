@@ -17,28 +17,28 @@ export default {
     )
   ]
 };
-console.log(BellIcon);
-const groupAppearance = 'IconButton-Appearance';
-const groupColors = 'IconButton-Colors';
-const sizeValue = number('Size', 50, {}, groupAppearance);
 
-const backgroundColorValue = color(
-  'backgroundColor',
-  'transparent',
-  groupColors
-);
-const backgroundColorHoverValue = color(
-  'backgroundColorHover',
-  stylesVars.whiteColor,
-  groupColors
-);
-const iconColorValue = color('iconColor', stylesVars.whiteColor, groupColors);
-const iconColorHoverValue = color(
-  'iconColorHover',
-  stylesVars.primaryColor,
-  groupColors
-);
 export const Icons = () => {
+  const groupAppearance = 'IconButton-Appearance';
+  const groupColors = 'IconButton-Colors';
+  const sizeValue = number('Size', 60, { step: 1 }, groupAppearance);
+
+  const backgroundColorValue = color(
+    'backgroundColor',
+    'transparent',
+    groupColors
+  );
+  const backgroundColorHoverValue = color(
+    'backgroundColorHover',
+    stylesVars.whiteColor,
+    groupColors
+  );
+  const iconColorValue = color('iconColor', stylesVars.whiteColor, groupColors);
+  const iconColorHoverValue = color(
+    'iconColorHover',
+    stylesVars.primaryColor,
+    groupColors
+  );
   return (
     <div className="buttons-stories">
       <div>
@@ -48,6 +48,10 @@ export const Icons = () => {
           iconColor="orangered"
           iconHref={`${iconPack}#icon-heart-full`}
         />
+      </div>
+      <div>
+        {/* import { ReactComponent as BellIcon } from '../../styles/assets/icons/bell.svg'; */}
+        <IconButton size={60} iconColor="orangered" IconSrc={BellIcon} />
       </div>
       <div>
         {/* import { ReactComponent as ArrowIcon } from '../../styles/assets/icons/arrow_forward_ios-24px.svg'; */}
