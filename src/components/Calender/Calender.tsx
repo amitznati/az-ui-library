@@ -133,15 +133,23 @@ const Calender: React.FC<{}> = () => {
       <div className="calendar-main">
         <div className="calendar-header">
           <div>
-            <span className="calendar-header-month">
-              {monthsArrayTranslate[months[activeMonth].month - 1]}
-            </span>
-            <span className="calendar-header-year">
-              {months[activeMonth].year}
-            </span>
+            <div>
+              <span className="calendar-header-year">
+                <span onClick={moveMonthUp}>{`<`}</span>
+                {months[activeMonth].year}
+                <span onClick={moveMontDown}>{`>`}</span>
+              </span>
+            </div>
+            <div>
+              <span className="calendar-header-month">
+                <span onClick={moveMonthUp}>{`<`}</span>
+                {monthsArrayTranslate[months[activeMonth].month - 1]}
+                <span onClick={moveMontDown}>{`>`}</span>
+              </span>
+            </div>
           </div>
           <div>
-            <span className="calendar-header-month">{getHeMonthName()}</span>
+            <span className="calendar-header-month-he">{getHeMonthName()}</span>
             <span className="calendar-header-year">{getHeYearName()}</span>
           </div>
         </div>
@@ -162,10 +170,6 @@ const Calender: React.FC<{}> = () => {
           height="52rem"
           itemToShow={3}
         />
-        <div className="cards-swift-stories-buttons">
-          <span onClick={moveMonthUp}>+</span>
-          <span onClick={moveMontDown}>-</span>
-        </div>
       </div>
     </div>
   );

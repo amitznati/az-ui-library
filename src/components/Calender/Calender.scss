@@ -25,7 +25,9 @@
     line-height: 1.4;
     &-month {
       cursor: pointer;
-      margin: 0 0 0 1rem;
+      &-he {
+        margin: 0 0 0 1rem;
+      }
     }
     &-year {
       cursor: pointer;
