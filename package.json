@@ -26,8 +26,12 @@
     "storybook": "start-storybook -p 9009",
     "build-storybook": "build-storybook"
   },
+  "dependencies": {
+    "hebcal": "^2.3.2"
+  },
   "peerDependencies": {
-    "react": "^16.0.0"
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^5.3.19",
@@ -61,7 +65,6 @@
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-standard": "^4.0.1",
     "gh-pages": "^2.2.0",
-    "hebcal": "^2.3.2",
     "microbundle-crl": "^0.13.10",
     "node-sass": "^4.14.1",
     "npm-run-all": "^4.1.5",
@@ -74,6 +77,5 @@
   },
   "files": [
     "dist"
-  ],
-  "dependencies": {}
+  ]
 }

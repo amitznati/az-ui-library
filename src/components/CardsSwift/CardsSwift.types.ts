@@ -7,7 +7,7 @@ export interface CardsSwiftProps {
     index: number,
     activeIndex: number
   ) => JSX.Element;
-  height: number | string;
+  height?: number | string;
   onSwiftRight?: () => void;
   onSwiftLeft?: () => void;
   itemToShow?: number;

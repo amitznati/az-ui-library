@@ -1,9 +1,8 @@
 import React from 'react';
 import Hebcal from 'hebcal';
-import { Month, HeDay, HeEvent, CalendarProps } from './Calender.types';
+import { Month, HeDay, HeEvent, CalendarProps } from './Calendar.types';
 import { monthsArrayHe, heDaysLong, monthsArrayTranslate } from './constants';
 import CardsSwift from '../CardsSwift/CardsSwift';
-import './Calender.scss';
 import IconButton from '../IconButton/IconButton';
 
 import { ReactComponent as ArrowIcon } from '../../styles/assets/icons/arrow_forward_ios-24px.svg';
@@ -32,11 +31,15 @@ const getEventText = (
   return text;
 };
 
-const renderCalenderPlaceHolder = (): JSX.Element => {
+const renderCalendarPlaceHolder = (): JSX.Element => {
   return <div className="calendar-month placeholder">&nbsp;</div>;
 };
 
-const Calender: React.FC<CalendarProps> = ({ selectedDate, onSelectDate, autoCloseOnSelect }) => {
+const Calendar: React.FC<CalendarProps> = ({
+  selectedDate,
+  onSelectDate,
+  autoCloseOnSelect
+}) => {
   const year = new Hebcal.GregYear();
   const [activeMonth, setActiveMonth] = React.useState(new Date().getMonth());
   const [calendarOpen, setCalendarOpen] = React.useState(false);
@@ -74,11 +77,23 @@ const Calender: React.FC<CalendarProps> = ({ selectedDate, onSelectDate, autoClo
           ...holidays
         });
         setActiveMonth(activeMonth + 11);
-        return () => clearTimeout(id);
+        clearTimeout(id);
       }, 600);
     }
   };
-  const renderCalenderMonth = (month: Month): JSX.Element => {
+  const moveYearUp = () => {
+    const year = new Hebcal.GregYear(months[activeMonth].year + 1);
+    setMonths(year.months);
+    setHolidays(year.holidays);
+    setActiveMonth(activeMonth % 12);
+  };
+  const moveYearDown = () => {
+    const year = new Hebcal.GregYear(months[activeMonth].year - 1);
+    setMonths(year.months);
+    setHolidays(year.holidays);
+    setActiveMonth(activeMonth % 12);
+  };
+  const renderCalendarMonth = (month: Month): JSX.Element => {
     let calendarDayIndex = -month.days[0].getDay();
     const days: Array<HeDay> = [];
     for (let i = calendarDayIndex; i < 0; i += 1) {
@@ -147,34 +162,46 @@ const Calender: React.FC<CalendarProps> = ({ selectedDate, onSelectDate, autoClo
     const str = [
       Hebcal.gematriya(heDate.day),
       monthsArrayHe[heDate.month - 1],
-      '/',
+      Hebcal.gematriya(heDate.year % 5000),
+      ' - ',
       selectedDate.getDate(),
       monthsArrayTranslate[selectedDate.getMonth()],
-      selectedDate.getFullYear(),
-      Hebcal.gematriya(heDate.year)
+      selectedDate.getFullYear()
     ];
     return str.join(' ');
   };
   return (
     <div className="calendar-container">
       {/* <h1>{time.toISOString()}</h1> */}
-      <div className="calendar-selected-date">{getSelectedDateText()}</div>
+      <div className="calendar-selected-date">
+        <span className="u-abs-center">{getSelectedDateText()}</span>
+        <div className="calendar-expand-icon">
+          <IconButton
+            size={30}
+            className={`calendar-expand-icon__icon ${
+              calendarOpen ? 'open' : ''
+            }`}
+            iconSrc={ArrowIcon}
+            onClick={toggleCalendar}
+          />
+        </div>
+      </div>
       <div className={`calendar-main ${calendarOpen ? 'open' : ''}`}>
         <div className="calendar-header">
           <div>
             <div>
               <span className="calendar-header-month">
                 <IconButton
-                  onClick={moveMonthUp}
+                  onClick={moveYearUp}
                   iconSrc={ArrowIcon}
-                  size={24}
+                  size={30}
                   className="arrow-up"
                 />
                 <span>{months[activeMonth].year}</span>
                 <IconButton
-                  onClick={moveMonthDown}
+                  onClick={moveYearDown}
                   iconSrc={ArrowIcon}
-                  size={24}
+                  size={30}
                   className="arrow-down"
                 />
               </span>
@@ -184,7 +211,7 @@ const Calender: React.FC<CalendarProps> = ({ selectedDate, onSelectDate, autoClo
                 <IconButton
                   onClick={moveMonthUp}
                   iconSrc={ArrowIcon}
-                  size={24}
+                  size={30}
                   className="arrow-up"
                 />
                 <span className="calendar-header-month-text">
@@ -193,7 +220,7 @@ const Calender: React.FC<CalendarProps> = ({ selectedDate, onSelectDate, autoClo
                 <IconButton
                   onClick={moveMonthDown}
                   iconSrc={ArrowIcon}
-                  size={24}
+                  size={30}
                   className="arrow-down"
                 />
               </span>
@@ -215,25 +242,17 @@ const Calender: React.FC<CalendarProps> = ({ selectedDate, onSelectDate, autoClo
           <CardsSwift
             data={months}
             activeIndex={activeMonth}
-            renderItem={renderCalenderMonth}
-            renderPlaceHolderItem={renderCalenderPlaceHolder}
+            renderItem={renderCalendarMonth}
+            renderPlaceHolderItem={renderCalendarPlaceHolder}
             onSwiftLeft={moveMonthUp}
             onSwiftRight={moveMonthDown}
-            height="52rem"
+            // height={isPhone ? '50rem' : '52rem'}
             itemToShow={3}
           />
         </div>
-      </div>
-      <div className="calendar-expand-icon">
-        <IconButton
-          size={50}
-          className={`calendar-expand-icon__icon ${calendarOpen ? 'open' : ''}`}
-          iconSrc={ArrowIcon}
-          onClick={toggleCalendar}
-        />
       </div>
     </div>
   );
 };
 
-export default Calender;
+export default Calendar;

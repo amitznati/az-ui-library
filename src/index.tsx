@@ -1,8 +1,17 @@
 import './styles/index.scss';
 import Button from './components/Button/Button';
-import Calender from './components/Calender/Calender';
+import Calendar from './components/Calendar/Calendar';
 import Navigation from './components/Navigation/Navigation';
 import NavigationLink from './components/NavigationLink/NavigationLink';
 import AppBar from './components/AppBar/AppBar';
 import CardsSwift from './components/CardsSwift/CardsSwift';
-export { Button, Calender, Navigation, NavigationLink, AppBar, CardsSwift };
+import IconButton from './components/IconButton/IconButton';
+export {
+  Button,
+  Calendar,
+  Navigation,
+  NavigationLink,
+  AppBar,
+  CardsSwift,
+  IconButton
+};

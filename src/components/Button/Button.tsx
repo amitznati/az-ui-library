@@ -1,7 +1,4 @@
 import React from 'react';
-
-import './Button.scss';
-// eslint-disable-next-line no-unused-vars
 import { ButtonProps } from './Button.types';
 
 const Button: React.FC<ButtonProps> = ({

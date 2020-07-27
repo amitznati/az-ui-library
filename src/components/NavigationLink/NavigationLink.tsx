@@ -1,9 +1,5 @@
 import React from 'react';
-
-// eslint-disable-next-line no-unused-vars
 import { NavigationLinkProps } from './NavigationLink.types';
-
-import './NavigationLink.scss';
 
 const NavigationLink: React.FC<NavigationLinkProps> = ({
   linkTo,
@@ -15,7 +11,8 @@ const NavigationLink: React.FC<NavigationLinkProps> = ({
   backgroundColorHover = '#ffffff',
   textColorHover = '#8e3032',
   className,
-  active
+  active,
+  linkComponent
 }) => {
   const [isHover, setIsHover] = React.useState(false);
   const customStyle = {
@@ -29,6 +26,20 @@ const NavigationLink: React.FC<NavigationLinkProps> = ({
     active ? ' active' : '',
     className
   ];
+  if (linkComponent) {
+    const LinkComp = linkComponent.comp;
+    return (
+      <LinkComp
+        className={cls.join(' ')}
+        style={customStyle}
+        onMouseOver={() => setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
+        {...linkComponent.props}
+      >
+        {children}
+      </LinkComp>
+    );
+  }
   return (
     <a
       href={linkTo}

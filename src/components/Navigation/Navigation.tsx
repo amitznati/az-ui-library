@@ -1,9 +1,6 @@
 import React from 'react';
-
-// eslint-disable-next-line no-unused-vars
 import { NavigationProps } from './Navigation.types';
 import NavigationLink from '../NavigationLink/NavigationLink';
-import './Navigation.scss';
 
 const Navigation: React.FC<NavigationProps> = ({
   navigationLinks,
@@ -27,7 +24,9 @@ const Navigation: React.FC<NavigationProps> = ({
         <ul className="navigation__list">
           {navigationLinks.map((link) => (
             <li key={link.title} className="navigation__item">
-              <NavigationLink linkTo={link.to}>{link.title}</NavigationLink>
+              <NavigationLink {...link} linkTo={link.to}>
+                {link.title}
+              </NavigationLink>
             </li>
           ))}
         </ul>

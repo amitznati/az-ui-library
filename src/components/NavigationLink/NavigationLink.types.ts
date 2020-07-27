@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface NavigationLinkProps {
   onClick?: any;
   backgroundColorHover?: string;
@@ -9,4 +11,8 @@ export interface NavigationLinkProps {
   className?: string;
   linkTo: string;
   active?: boolean;
+  linkComponent?: {
+    comp: React.FC;
+    props: any;
+  };
 }

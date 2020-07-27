@@ -50,12 +50,12 @@ interface HeMonth {
 //   long: number;
 // }
 
-export interface CalenderDayProps {
+export interface CalendarDayProps {
   day?: HeDay;
   onSelect?: (d: HeDay) => void;
 }
 
-export interface CalenderMonthProps {
+export interface CalendarMonthProps {
   month: Month;
 }
 

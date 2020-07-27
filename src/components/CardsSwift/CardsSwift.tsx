@@ -1,8 +1,5 @@
 import React, { CSSProperties } from 'react';
-
 import { CardsSwiftProps } from './CardsSwift.types';
-
-import './CardsSwift.scss';
 
 const CardsSwift: React.FC<CardsSwiftProps> = ({
   data,
@@ -71,7 +68,7 @@ const CardsSwift: React.FC<CardsSwiftProps> = ({
     };
   };
   return (
-    <div style={{ height }} className="cards-swift-container">
+    <div style={height ? { height } : {}} className="cards-swift-container">
       <div className="cards-swift">
         {data.map((item, i) =>
           Math.abs(activeIndex - i) > itemToShow + 1 ? null : (

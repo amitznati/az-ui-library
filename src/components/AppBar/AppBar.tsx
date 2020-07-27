@@ -1,8 +1,6 @@
 import React from 'react';
-// eslint-disable-next-line no-unused-vars
 import { AppBarProps } from './AppBar.types';
 
-import './AppBar.scss';
 import NavigationLink from '../NavigationLink/NavigationLink';
 import Navigation from '../Navigation/Navigation';
 
@@ -24,6 +22,7 @@ const AppBar: React.FC<AppBarProps> = ({ logoSrc, title, navigationLinks }) => {
       <div className="app-bar__navigation-links">
         {navigationLinks.map((link) => (
           <NavigationLink
+            {...link}
             key={link.title}
             size="small"
             className="app-bar__navigation-links--link"

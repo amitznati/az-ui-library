@@ -38,7 +38,8 @@ export const monthsArrayHe = [
   'כסלו',
   'טבט',
   'שבט',
-  'אדר'
+  'אדר',
+  'אדר ב'
 ];
 export const heDaysLong = [
   'ראשון',

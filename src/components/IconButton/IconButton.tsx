@@ -1,8 +1,5 @@
 import React from 'react';
-
 import { IconButtonProps } from './IconButton.types';
-
-import './IconButton.scss';
 
 const IconButton: React.FC<IconButtonProps> = ({
   iconHref,
