@@ -1,12 +1,12 @@
 import React from 'react';
 import Hebcal from 'hebcal';
-import { Month, HeDay, HeEvent } from './Calender.types';
+import { Month, HeDay, HeEvent, CalendarProps } from './Calender.types';
 import { monthsArrayHe, heDaysLong, monthsArrayTranslate } from './constants';
 import CardsSwift from '../CardsSwift/CardsSwift';
 import './Calender.scss';
 import IconButton from '../IconButton/IconButton';
 
-import {ReactComponent as ArrowIcon} from '../../styles/assets/icons/arrow_forward_ios-24px.svg';
+import { ReactComponent as ArrowIcon } from '../../styles/assets/icons/arrow_forward_ios-24px.svg';
 
 // window.Hebcal = Hebcal;
 
@@ -36,9 +36,10 @@ const renderCalenderPlaceHolder = (): JSX.Element => {
   return <div className="calendar-month placeholder">&nbsp;</div>;
 };
 
-const Calender: React.FC<{}> = () => {
+const Calender: React.FC<CalendarProps> = ({ selectedDate, onSelectDate, autoCloseOnSelect }) => {
   const year = new Hebcal.GregYear();
   const [activeMonth, setActiveMonth] = React.useState(new Date().getMonth());
+  const [calendarOpen, setCalendarOpen] = React.useState(false);
   const [months, setMonths] = React.useState(year.months);
   const [holidays, setHolidays] = React.useState(year.holidays);
   // TESTING
@@ -50,6 +51,7 @@ const Calender: React.FC<{}> = () => {
   //   return () => clearInterval(interval);
   // }, []);
   // END
+  const toggleCalendar = () => setCalendarOpen(!calendarOpen);
   const moveMonthUp = (): void => {
     setActiveMonth(activeMonth + 1);
     if (activeMonth + 5 > months.length) {
@@ -63,14 +65,17 @@ const Calender: React.FC<{}> = () => {
   };
   const moveMonthDown = (): void => {
     setActiveMonth(activeMonth - 1);
-    if (activeMonth <= 1) {
-      const newYear = new Hebcal.GregYear(months[activeMonth].year - 1);
-      setMonths([...newYear.months, ...months]);
-      setHolidays({
-        ...newYear.holidays,
-        ...holidays
-      });
-      setActiveMonth(activeMonth + 11);
+    if (activeMonth <= 2) {
+      const id = setTimeout(() => {
+        const newYear = new Hebcal.GregYear(months[activeMonth].year - 1);
+        setMonths([...newYear.months, ...months]);
+        setHolidays({
+          ...newYear.holidays,
+          ...holidays
+        });
+        setActiveMonth(activeMonth + 11);
+        return () => clearTimeout(id);
+      }, 600);
     }
   };
   const renderCalenderMonth = (month: Month): JSX.Element => {
@@ -103,7 +108,14 @@ const Calender: React.FC<{}> = () => {
                 day.greg().getMonth() !== month.month - 1 ? 'day--disabled' : ''
               ];
               return (
-                <div key={key} className={classNames.join(' ')}>
+                <div
+                  key={key}
+                  className={classNames.join(' ')}
+                  onClick={() => {
+                    onSelectDate(day.greg());
+                    autoCloseOnSelect && toggleCalendar();
+                  }}
+                >
                   <span>{day.greg().getDate()}</span>
                   <span>{Hebcal.gematriya(day.day)}</span>
                   <span>{getEventText(holidays[day.toString()], day)}</span>
@@ -130,24 +142,38 @@ const Calender: React.FC<{}> = () => {
     }
     return heyears[0];
   };
+  const getSelectedDateText = () => {
+    const heDate = new Hebcal.HDate(selectedDate);
+    const str = [
+      Hebcal.gematriya(heDate.day),
+      monthsArrayHe[heDate.month - 1],
+      '/',
+      selectedDate.getDate(),
+      monthsArrayTranslate[selectedDate.getMonth()],
+      selectedDate.getFullYear(),
+      Hebcal.gematriya(heDate.year)
+    ];
+    return str.join(' ');
+  };
   return (
     <div className="calendar-container">
       {/* <h1>{time.toISOString()}</h1> */}
-      <div className="calendar-main">
+      <div className="calendar-selected-date">{getSelectedDateText()}</div>
+      <div className={`calendar-main ${calendarOpen ? 'open' : ''}`}>
         <div className="calendar-header">
           <div>
             <div>
               <span className="calendar-header-month">
                 <IconButton
                   onClick={moveMonthUp}
-                  IconSrc={ArrowIcon}
+                  iconSrc={ArrowIcon}
                   size={24}
                   className="arrow-up"
                 />
                 <span>{months[activeMonth].year}</span>
                 <IconButton
                   onClick={moveMonthDown}
-                  IconSrc={ArrowIcon}
+                  iconSrc={ArrowIcon}
                   size={24}
                   className="arrow-down"
                 />
@@ -157,7 +183,7 @@ const Calender: React.FC<{}> = () => {
               <span className="calendar-header-month">
                 <IconButton
                   onClick={moveMonthUp}
-                  IconSrc={ArrowIcon}
+                  iconSrc={ArrowIcon}
                   size={24}
                   className="arrow-up"
                 />
@@ -166,7 +192,7 @@ const Calender: React.FC<{}> = () => {
                 </span>
                 <IconButton
                   onClick={moveMonthDown}
-                  IconSrc={ArrowIcon}
+                  iconSrc={ArrowIcon}
                   size={24}
                   className="arrow-down"
                 />
@@ -197,6 +223,14 @@ const Calender: React.FC<{}> = () => {
             itemToShow={3}
           />
         </div>
+      </div>
+      <div className="calendar-expand-icon">
+        <IconButton
+          size={50}
+          className={`calendar-expand-icon__icon ${calendarOpen ? 'open' : ''}`}
+          iconSrc={ArrowIcon}
+          onClick={toggleCalendar}
+        />
       </div>
     </div>
   );

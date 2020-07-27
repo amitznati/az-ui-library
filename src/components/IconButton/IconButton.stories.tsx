@@ -51,7 +51,7 @@ export const Icons = () => {
       </div>
       <div>
         {/* import { ReactComponent as BellIcon } from '../../styles/assets/icons/bell.svg'; */}
-        <IconButton size={60} iconColor="orangered" IconSrc={BellIcon} />
+        <IconButton size={60} iconColor="orangered" iconSrc={BellIcon} />
       </div>
       <div>
         {/* import { ReactComponent as ArrowIcon } from '../../styles/assets/icons/arrow_forward_ios-24px.svg'; */}
@@ -61,7 +61,7 @@ export const Icons = () => {
           iconColorHover={iconColorHoverValue}
           backgroundColor={backgroundColorValue}
           backgroundColorHover={backgroundColorHoverValue}
-          IconSrc={ArrowIcon}
+          iconSrc={ArrowIcon}
         />
       </div>
       <div>

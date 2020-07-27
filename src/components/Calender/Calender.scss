@@ -8,16 +8,45 @@
   align-items: stretch;
   width: 100%;
 
-  &-main {
-
-  }
 
   &-container {
-    margin: auto;
+    padding: 1rem 0;
     overflow: hidden;
     border-radius: 1rem;
     max-width: 55rem;
     background-image: linear-gradient(to bottom, $color-primary 0%, rgba($color-primary-dark, 0.8) 100%);
+  }
+  &-main {
+    height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .5s;
+    &.open {
+      height: 68rem;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  &-selected-date {
+    font-size: 2rem;
+    text-align: center;
+    color: $color-white;
+  }
+
+  &-expand-icon {
+    display: flex;
+    justify-content: center;
+    &__icon {
+      svg {
+        transform: rotate(90deg);
+      }
+      &.open {
+        svg {
+          transform: rotate(-90deg);
+        }
+      }
+    }
   }
 
   &-header {
@@ -31,7 +60,9 @@
       display: inline-block;
       width: 40%;
       .arrow-up {
-        transform: rotate(180deg);
+        svg {
+          transform: rotate(180deg);
+        }
         float: left;
       }
       .arrow-down {
@@ -56,6 +87,9 @@
       padding: 0 4rem;
       margin-bottom: 1rem;
       box-shadow: $btn-hover-shadow;
+      @include respond(phone) {
+        padding: 0 2.5rem;
+      }
     }
   }
   &-month {

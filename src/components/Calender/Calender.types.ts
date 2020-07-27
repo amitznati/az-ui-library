@@ -58,3 +58,9 @@ export interface CalenderDayProps {
 export interface CalenderMonthProps {
   month: Month;
 }
+
+export interface CalendarProps {
+  selectedDate: Date;
+  onSelectDate: (Date) => void;
+  autoCloseOnSelect?: boolean;
+}

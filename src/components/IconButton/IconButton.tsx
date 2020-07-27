@@ -6,7 +6,7 @@ import './IconButton.scss';
 
 const IconButton: React.FC<IconButtonProps> = ({
   iconHref,
-  IconSrc,
+  iconSrc: IconSrc,
   size = 50,
   backgroundColor = 'transparent',
   iconColor = '#ffffff',
