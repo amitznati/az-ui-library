@@ -6,6 +6,18 @@ import CardsSwift from '../CardsSwift/CardsSwift';
 import IconButton from '../IconButton/IconButton';
 
 import { ReactComponent as ArrowIcon } from '../../styles/assets/icons/arrow_forward_ios-24px.svg';
+import {
+  StyledCalendarExpandIcon,
+  StyledCalendarContainer,
+  StyledCalendarSelectedDate,
+  StyledCalendarMain,
+  StyledCalendarHeader,
+  StyledCalendarWeekDays,
+  StyledCalendarWeek,
+  StyledCalendarMonth,
+  StyledCalendarMonthContainer,
+  StyledCalendarMonthPlaceholder, StyledCalendarDay, StyledCalendarDayName
+} from './Calendar.styles'
 
 // window.Hebcal = Hebcal;
 
@@ -32,7 +44,9 @@ const getEventText = (
 };
 
 const renderCalendarPlaceHolder = (): JSX.Element => {
-  return <div className="calendar-month placeholder">&nbsp;</div>;
+  return (
+    <StyledCalendarMonthPlaceholder>&nbsp;</StyledCalendarMonthPlaceholder>
+  );
 };
 
 const Calendar: React.FC<CalendarProps> = ({
@@ -54,7 +68,7 @@ const Calendar: React.FC<CalendarProps> = ({
   //   return () => clearInterval(interval);
   // }, []);
   // END
-  const toggleCalendar = () => setCalendarOpen(!calendarOpen);
+  const toggleCalendar = (): void => setCalendarOpen(!calendarOpen);
   const moveMonthUp = (): void => {
     setActiveMonth(activeMonth + 1);
     if (activeMonth + 5 > months.length) {
@@ -81,13 +95,13 @@ const Calendar: React.FC<CalendarProps> = ({
       }, 600);
     }
   };
-  const moveYearUp = () => {
+  const moveYearUp = (): void => {
     const year = new Hebcal.GregYear(months[activeMonth].year + 1);
     setMonths(year.months);
     setHolidays(year.holidays);
     setActiveMonth(activeMonth % 12);
   };
-  const moveYearDown = () => {
+  const moveYearDown = (): void => {
     const year = new Hebcal.GregYear(months[activeMonth].year - 1);
     setMonths(year.months);
     setHolidays(year.holidays);
@@ -111,44 +125,43 @@ const Calendar: React.FC<CalendarProps> = ({
     }
     calendarDayIndex = 0;
     return (
-      <div className="calendar-month">
+      <StyledCalendarMonth>
         {[0, 1, 2, 3, 4, 5].map((week) => (
-          <div key={`week-${week}`} className="calendar-week">
+          <StyledCalendarWeek key={`week-${week}`}>
             {[0, 1, 2, 3, 4, 5, 6].map((d) => {
               const day = days[calendarDayIndex];
               calendarDayIndex += 1;
               const key = ['day', month.month, week, d].join('-');
-              const classNames = [
-                'day',
-                day.greg().getMonth() !== month.month - 1 ? 'day--disabled' : ''
-              ];
+              const isDisable = day.greg().getMonth() !== month.month - 1;
               return (
-                <div
+                <StyledCalendarDay
                   key={key}
-                  className={classNames.join(' ')}
-                  onClick={() => {
+                  isDisable={isDisable}
+                  onClick={(): void => {
                     onSelectDate(day.greg());
                     autoCloseOnSelect && toggleCalendar();
                   }}
                 >
-                  <span>{day.greg().getDate()}</span>
-                  <span>{Hebcal.gematriya(day.day)}</span>
+                  <div className="day-dates">
+                    <span>{day.greg().getDate()}</span>
+                    <span>{Hebcal.gematriya(day.day)}</span>
+                  </div>
                   <span>{getEventText(holidays[day.toString()], day)}</span>
-                </div>
+                </StyledCalendarDay>
               );
             })}
-          </div>
+          </StyledCalendarWeek>
         ))}
-      </div>
+      </StyledCalendarMonth>
     );
   };
-  const getHeMonthName = () => {
+  const getHeMonthName = (): string => {
     const hebmonths = months[activeMonth].hebmonths.map(
       (heMonth) => monthsArrayHe[heMonth.month - 1]
     );
     return hebmonths.join(hebmonths.length > 1 ? '-' : '');
   };
-  const getHeYearName = () => {
+  const getHeYearName = (): string => {
     const heyears = months[activeMonth].hebmonths.map((heMonth) =>
       Hebcal.gematriya(heMonth.year)
     );
@@ -157,7 +170,7 @@ const Calendar: React.FC<CalendarProps> = ({
     }
     return heyears[0];
   };
-  const getSelectedDateText = () => {
+  const getSelectedDateText = (): string => {
     const heDate = new Hebcal.HDate(selectedDate);
     const str = [
       Hebcal.gematriya(heDate.day),
@@ -171,23 +184,21 @@ const Calendar: React.FC<CalendarProps> = ({
     return str.join(' ');
   };
   return (
-    <div className="calendar-container">
+    <StyledCalendarContainer>
       {/* <h1>{time.toISOString()}</h1> */}
-      <div className="calendar-selected-date">
+      <StyledCalendarSelectedDate>
         <span className="u-abs-center">{getSelectedDateText()}</span>
-        <div className="calendar-expand-icon">
+        <StyledCalendarExpandIcon isOpen={calendarOpen}>
           <IconButton
             size={30}
-            className={`calendar-expand-icon__icon ${
-              calendarOpen ? 'open' : ''
-            }`}
+            className="calendar-expand-icon__icon"
             iconSrc={ArrowIcon}
             onClick={toggleCalendar}
           />
-        </div>
-      </div>
-      <div className={`calendar-main ${calendarOpen ? 'open' : ''}`}>
-        <div className="calendar-header">
+        </StyledCalendarExpandIcon>
+      </StyledCalendarSelectedDate>
+      <StyledCalendarMain isOpen={calendarOpen}>
+        <StyledCalendarHeader>
           <div>
             <div>
               <span className="calendar-header-month">
@@ -214,7 +225,7 @@ const Calendar: React.FC<CalendarProps> = ({
                   size={30}
                   className="arrow-up"
                 />
-                <span className="calendar-header-month-text">
+                <span className="calendar-header-text">
                   {monthsArrayTranslate[months[activeMonth].month - 1]}
                 </span>
                 <IconButton
@@ -230,15 +241,13 @@ const Calendar: React.FC<CalendarProps> = ({
             <span className="calendar-header-month-he">{getHeMonthName()}</span>
             <span className="calendar-header-year">{getHeYearName()}</span>
           </div>
-        </div>
-        <div className="calendar-week calendar-week-days">
+        </StyledCalendarHeader>
+        <StyledCalendarWeekDays>
           {heDaysLong.map((day) => (
-            <span key={day} className="day-name">
-              {day}
-            </span>
+            <StyledCalendarDayName key={day}>{day}</StyledCalendarDayName>
           ))}
-        </div>
-        <div className="calendar-month-container">
+        </StyledCalendarWeekDays>
+        <StyledCalendarMonthContainer>
           <CardsSwift
             data={months}
             activeIndex={activeMonth}
@@ -249,9 +258,9 @@ const Calendar: React.FC<CalendarProps> = ({
             // height={isPhone ? '50rem' : '52rem'}
             itemToShow={3}
           />
-        </div>
-      </div>
-    </div>
+        </StyledCalendarMonthContainer>
+      </StyledCalendarMain>
+    </StyledCalendarContainer>
   );
 };
 

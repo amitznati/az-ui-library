@@ -4,8 +4,6 @@ import IconButton from './IconButton';
 import iconPack from '../../styles/assets/icons/sprite.svg';
 import { ReactComponent as BellIcon } from '../../styles/assets/icons/bell.svg';
 import { ReactComponent as ArrowIcon } from '../../styles/assets/icons/arrow_forward_ios-24px.svg';
-// @ts-ignore
-import stylesVars from '../../styles/abstracts/_variables.scss';
 
 export default {
   title: 'IconButton',
@@ -30,35 +28,27 @@ export const Icons = () => {
   );
   const backgroundColorHoverValue = color(
     'backgroundColorHover',
-    stylesVars.whiteColor,
+    'white',
     groupColors
   );
-  const iconColorValue = color('iconColor', stylesVars.whiteColor, groupColors);
-  const iconColorHoverValue = color(
-    'iconColorHover',
-    stylesVars.primaryColor,
-    groupColors
-  );
+  const iconColorValue = color('iconColor', 'white', groupColors);
+  const iconColorHoverValue = color('iconColorHover', 'blue', groupColors);
   return (
     <div className="buttons-stories">
       <div>
         {/* import iconPack from '../../styles/assets/icons/sprite.svg'; */}
-        <IconButton
-          size={60}
-          iconColor="orangered"
-          iconHref={`${iconPack}#icon-heart-full`}
-        />
+        <IconButton size={60} iconHref={`${iconPack}#icon-heart-full`} />
       </div>
       <div>
         {/* import { ReactComponent as BellIcon } from '../../styles/assets/icons/bell.svg'; */}
-        <IconButton size={60} iconColor="orangered" iconSrc={BellIcon} />
+        <IconButton size={60} textColor="orangered" iconSrc={BellIcon} />
       </div>
       <div>
         {/* import { ReactComponent as ArrowIcon } from '../../styles/assets/icons/arrow_forward_ios-24px.svg'; */}
         <IconButton
           size={sizeValue}
-          iconColor={iconColorValue}
-          iconColorHover={iconColorHoverValue}
+          textColor={iconColorValue}
+          textColorHover={iconColorHoverValue}
           backgroundColor={backgroundColorValue}
           backgroundColorHover={backgroundColorHoverValue}
           iconSrc={ArrowIcon}

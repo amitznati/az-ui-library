@@ -9,6 +9,11 @@ declare module '*.css' {
 
 type SvgrComponent = React.FC<React.SVGAttributes<SVGElement>>;
 
+declare module '*.png' {
+  const value: any;
+  export = value;
+}
+
 // declare module '*.svg' {
 //   const svgUrl: string;
 //   const svgComponent: SvgrComponent;

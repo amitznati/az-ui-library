@@ -22,55 +22,83 @@ export const all = () => {
       </div>
       <div>
         <p>Sizes</p>
-        <Button onClick={onClick} size="tiny">
-          tiny
-        </Button>
-        <Button onClick={onClick} size="small">
-          small
-        </Button>
-        <Button onClick={onClick} size="medium">
-          medium
-        </Button>
-        <Button onClick={onClick} size="large">
-          large
-        </Button>
+        <Button size="tiny">tiny</Button>
+        <Button size="small">small</Button>
+        <Button size="medium">medium</Button>
+        <Button size="large">large</Button>
       </div>
       <div>
         <p>Round</p>
-        <Button onClick={onClick} size="tiny" rounded>
+        <Button size="tiny" rounded>
           tiny
         </Button>
-        <Button onClick={onClick} size="small" rounded>
+        <Button size="small" rounded>
           small
         </Button>
-        <Button onClick={onClick} size="medium" rounded>
+        <Button size="medium" rounded>
           medium
         </Button>
-        <Button onClick={onClick} size="large" rounded>
+        <Button size="large" rounded>
           large
         </Button>
       </div>
       <div>
         <p>Variant</p>
-        <Button onClick={onClick} variant="white">
+        <Button variant="white">white</Button>
+        <Button variant="primary">primary</Button>
+        <Button variant="secondary">secondary</Button>
+      </div>
+      <div>
+        <Button variant="white" rounded>
           white
         </Button>
-        <Button onClick={onClick} variant="primary">
+        <Button variant="primary" rounded>
           primary
         </Button>
-        <Button onClick={onClick} variant="secondary">
+        <Button variant="secondary" rounded>
           secondary
         </Button>
       </div>
       <div>
-        <Button onClick={onClick} variant="white" rounded>
+        <p>With Hover Effect</p>
+        <Button variant="white" withHoverEffect>
           white
         </Button>
-        <Button onClick={onClick} variant="primary" rounded>
+        <Button variant="primary" withHoverEffect>
           primary
         </Button>
-        <Button onClick={onClick} variant="secondary" rounded>
+        <Button variant="secondary" withHoverEffect>
           secondary
+        </Button>
+        <Button variant="white" withHoverEffect rounded>
+          white
+        </Button>
+        <Button variant="primary" withHoverEffect rounded>
+          primary
+        </Button>
+        <Button variant="secondary" withHoverEffect rounded>
+          secondary
+        </Button>
+      </div>
+      <div>
+        <p>Custom Variant</p>
+        <Button variant="#3c3ce5">#3c3ce5</Button>
+        <Button variant="#e53c73">#e53c73</Button>
+        <Button variant="orangered">orangered</Button>
+      </div>
+      <div>
+        <Button variant="orangered" rounded>
+          orangered rounded
+        </Button>
+        <Button variant="orangered" rounded withHoverEffect>
+          orangered rounded HoverEffect
+        </Button>
+        <Button
+          variant={{ bg: 'rebeccapurple', text: 'white' }}
+          rounded
+          withHoverEffect
+        >
+          background = rebeccapurple, text = white
         </Button>
       </div>
     </div>

@@ -1,5 +1,49 @@
-import React, { CSSProperties } from 'react';
+import React from 'react';
 import { CardsSwiftProps } from './CardsSwift.types';
+import styled from 'styled-components';
+
+const getItemStyle = (props): string => {
+  const { index, itemToShow, activeIndex } = props;
+  const ratio = Math.min(itemToShow, Math.abs(activeIndex - index));
+  const isBig = index > activeIndex;
+  return `
+      opacity: ${1 - ratio * 0.1};
+      left: ${
+        ratio !== 0
+          ? `calc(${isBig ? '-' : ''}5px + ${
+              isBig ? `-7% - ${ratio}%` : `17% + ${ratio}%`
+            })`
+          : '5%'
+      };
+      z-index: ${100 - ratio};
+      transform: ${
+        ratio !== 0
+          ? `rotate3d(0, 1, 0, ${
+              isBig ? '10deg' : '-10deg'
+            }) scale3d(0.7, 0.9, 1)`
+          : ''
+      };
+    `;
+};
+
+const StyledCardsSwiftContainer = styled.div`
+  width: 100%;
+`;
+const StyledCardsSwift = styled.div`
+  position: relative;
+  display: inline-flex;
+  perspective: 1500px;
+  width: 100%;
+  height: 100%;
+`;
+const StyledCardsSwiftItem = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 90%;
+  display: inline-table;
+  transition: all 0.5s;
+  ${(props): string => getItemStyle(props)}
+`;
 
 const CardsSwift: React.FC<CardsSwiftProps> = ({
   data,
@@ -45,37 +89,16 @@ const CardsSwift: React.FC<CardsSwiftProps> = ({
       }
     }
   };
-  const getItemStyle = (index: number): CSSProperties => {
-    const ratio = Math.min(itemToShow, Math.abs(activeIndex - index));
-    const isBig = index > activeIndex;
-    return {
-      opacity: `${1 - ratio * 0.1}`,
-      left: `${
-        ratio !== 0
-          ? `calc(${isBig ? '-' : ''}5px + ${
-              isBig ? `-7% - ${ratio}%` : `17% + ${ratio}%`
-            })`
-          : '5%'
-      }`,
-      zIndex: 100 - ratio,
-      transform: `${
-        ratio !== 0
-          ? `rotate3d(0, 1, 0, ${
-              isBig ? '10deg' : '-10deg'
-            }) scale3d(0.7, 0.9, 1)`
-          : ''
-      }`
-    };
-  };
   return (
-    <div style={height ? { height } : {}} className="cards-swift-container">
-      <div className="cards-swift">
+    <StyledCardsSwiftContainer style={height ? { height } : {}}>
+      <StyledCardsSwift>
         {data.map((item, i) =>
           Math.abs(activeIndex - i) > itemToShow + 1 ? null : (
-            <div
+            <StyledCardsSwiftItem
               key={`cards-swift-card-${i}`}
-              className="cards-swift--item"
-              style={getItemStyle(i)}
+              index={i}
+              activeIndex={activeIndex}
+              itemToShow={itemToShow}
               onTouchStart={onSwiftLeft && onSwiftRight && onTouchStart}
               onTouchEnd={onSwiftLeft && onSwiftRight && onTouchEnd}
               onTouchMove={onSwiftLeft && onSwiftRight && onTouchMove}
@@ -83,11 +106,11 @@ const CardsSwift: React.FC<CardsSwiftProps> = ({
               {renderPlaceHolderItem && Math.abs(activeIndex - i) > 1
                 ? renderPlaceHolderItem(item, i, activeIndex)
                 : renderItem(item, i, activeIndex)}
-            </div>
+            </StyledCardsSwiftItem>
           )
         )}
-      </div>
-    </div>
+      </StyledCardsSwift>
+    </StyledCardsSwiftContainer>
   );
 };
 export default CardsSwift;

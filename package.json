@@ -27,7 +27,8 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "hebcal": "^2.3.2"
+    "hebcal": "^2.3.2",
+    "styled-components": "^5.1.1"
   },
   "peerDependencies": {
     "react": "^16.8.0",

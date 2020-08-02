@@ -1,56 +1,113 @@
 import React from 'react';
 import { NavigationLinkProps } from './NavigationLink.types';
+import styled from 'styled-components';
+
+const getSize = (size): string => {
+  switch (size) {
+    case 'large':
+      return `font-size: 3.1rem;
+    padding: 1rem 2rem;`;
+    case 'medium':
+      return `font-size: 2.4rem;
+    padding: 0.75rem 1.5rem;`;
+    case 'small':
+      return `font-size: 1.7rem;
+    padding: 0.5rem 1rem;`;
+    case 'tiny':
+      return `font-size: 1rem;
+    padding: 0.25rem 0.5rem;`;
+    default:
+      return `font-size: 2.4rem;
+    padding: 0.75rem 1.5rem;`;
+  }
+};
+const styleNav = (props): string => `
+  &,
+  &:link,
+  &:visited,
+  &:not([href]),
+  & > * {
+    display: inline-block;
+    color: ${props.textColor || '#fff'};
+    text-decoration: none;
+    text-transform: uppercase;
+    background-image: linear-gradient(
+      120deg,
+      ${props.backgroundColor || 'transparent'} 0%,
+      ${props.backgroundColor || 'transparent'} 50%,
+      ${props.backgroundColorHover || '#fff'} 51%
+    );
+    background-size: 250%;
+    transition: all 1s cubic-bezier(0.2, 0.68, 0.09, 1);
+    cursor: pointer;
+    line-height: 1;
+    font-weight: 300;
+    ${
+      props.active &&
+      `
+    background-position: 100%;
+    color: ${
+      props.textColorHover ||
+      (props.theme.colors && props.theme.colors.primary) ||
+      '#8e3032'
+    };
+    box-shadow: 0 0.2rem 0 rgba(0, 0, 0, 0.4);`
+    }
+  }
+  ${getSize(props.size)}
+
+  border-radius: ${props.rounded ? '100px' : '0'};
+  @media (hover: hover) {
+    &:hover,
+    &:not([href]):hover,
+    &:hover > * {
+      background-position: 100%;
+      color: ${
+        props.textColorHover ||
+        (props.theme.colors && props.theme.colors.primary) ||
+        '#8e3032'
+      };
+      box-shadow: 0 .5rem 1rem rgba(0, 0 ,0 ,0.4);
+    }
+  }
+  &:not([href]):active,
+  &:active > * {
+    background-position: 100%;
+    color: ${
+      props.textColorHover ||
+      (props.theme.colors && props.theme.colors.primary) ||
+      '#8e3032'
+    };
+    box-shadow: 0 0.2rem 0 rgba(0, 0, 0, 0.4);
+  }
+`;
+const StyledNavigationLink = styled.a.attrs((props) => ({
+  href: props.to,
+  'aria-current': props.active ? 'page' : ''
+}))`
+  ${(props): string => styleNav(props)}
+`;
 
 const NavigationLink: React.FC<NavigationLinkProps> = ({
-  linkTo,
-  children,
-  size = 'medium',
-  rounded,
-  backgroundColor = 'transparent',
-  textColor = '#ffffff',
-  backgroundColorHover = '#ffffff',
-  textColorHover = '#8e3032',
-  className,
+  linkComponent,
   active,
-  linkComponent
+  ...rest
 }) => {
-  const [isHover, setIsHover] = React.useState(false);
-  const customStyle = {
-    color: isHover || active ? textColorHover : textColor,
-    backgroundImage: `linear-gradient(120deg, ${backgroundColor} 0%, ${backgroundColor} 50%, ${backgroundColorHover} 51%)`
-  };
-  const cls = [
-    'navigation__link',
-    size ? `navigation__link--${size}` : '',
-    rounded ? 'navigation__link--rounded' : '',
-    active ? ' active' : '',
-    className
-  ];
   if (linkComponent) {
-    const LinkComp = linkComponent.comp;
+    // const LinkComp = linkComponent.comp;
+    const LinkComp = styled(linkComponent.comp)`
+      ${(props): string => styleNav({ ...props, ...rest, active })}
+    `;
     return (
       <LinkComp
-        className={cls.join(' ')}
-        style={customStyle}
-        onMouseOver={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
         {...linkComponent.props}
+        className={[linkComponent.props.className, rest.className].join(' ')}
       >
-        {children}
+        {rest.children}
       </LinkComp>
     );
   }
-  return (
-    <a
-      href={linkTo}
-      className={cls.join(' ')}
-      style={customStyle}
-      onMouseOver={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
-    >
-      {children}
-    </a>
-  );
+  return <StyledNavigationLink aria-current="page" {...rest} />;
 };
 
 export default NavigationLink;

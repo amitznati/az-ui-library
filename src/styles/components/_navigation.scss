@@ -1,7 +1,9 @@
 .navigation {
   opacity: 0;
+  visibility: hidden;
   &.shown {
     opacity: 1;
+    visibility: visible;
   }
   transition: all 1s;
   @include respond(phone) {

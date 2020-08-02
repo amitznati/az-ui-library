@@ -1,25 +1,78 @@
 import React from 'react';
+import styled from 'styled-components';
 import { AppBarProps } from './AppBar.types';
 
 import NavigationLink from '../NavigationLink/NavigationLink';
 import Navigation from '../Navigation/Navigation';
 
+const StyledAppBar = styled.div`
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 13rem;
+  width: 100%;
+  background-color: ${(props): string =>
+    (props.theme.colors && props.theme.colors.primary) || '#8e3032'};
+  box-shadow: 0 0.2rem 1rem
+    ${(props): string =>
+      (props.theme.colors && props.theme.colors.black) || '#8e3032'};
+  z-index: 1500;
+  @media (max-width: 37.5em) {
+    height: 8rem;
+    position: fixed;
+  }
+`;
+const StyledAppBarIcon = styled.div`
+  position: absolute;
+  left: 3rem;
+  top: 3rem;
+  @media (max-width: 37.5em) {
+    top: 1.8rem;
+  }
+`;
+const StyledAppBarIconImage = styled.img`
+  height: 7rem;
+  @media (max-width: 37.5em) {
+    height: 5rem;
+  }
+`;
+const StyledAppBarPageTitle = styled.div`
+  text-align: center;
+  font-size: 5rem;
+  color: ${(props): string =>
+    (props.theme.colors && props.theme.colors.white) || '#fff'};
+  line-height: 1;
+  padding-top: 2.5rem;
+  @media (max-width: 37.5em) {
+    padding-top: 2rem;
+    font-size: 4rem;
+  }
+`;
+const StyledAppBarNavigationLinks = styled.div`
+  display: flex;
+  transform: translateX(-50%);
+  justify-content: center;
+  flex-direction: row-reverse;
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  width: 100%;
+  & .app-bar__navigation-links--link {
+    margin: 0 1.5rem;
+  }
+  @media (max-width: 37.5em) {
+    display: none;
+  }
+`;
+
 const AppBar: React.FC<AppBarProps> = ({ logoSrc, title, navigationLinks }) => {
-  const [navigationClass, setNavigationClass] = React.useState('');
-  const myScrollFunc = () => {
-    setNavigationClass(window.scrollY > 160 ? 'shown' : '');
-  };
-  React.useEffect(() => {
-    window.addEventListener('scroll', myScrollFunc);
-    return () => window.removeEventListener('scroll', myScrollFunc);
-  });
   return (
-    <div className="app-bar">
-      <div className="app-bar__icon">
-        <img src={logoSrc} className="app-bar__icon--image" alt="logo" />
-      </div>
-      <h1 className="app-bar__page-title">{title}</h1>
-      <div className="app-bar__navigation-links">
+    <StyledAppBar>
+      <StyledAppBarIcon>
+        <StyledAppBarIconImage src={logoSrc} alt="logo" />
+      </StyledAppBarIcon>
+      <StyledAppBarPageTitle>{title}</StyledAppBarPageTitle>
+      <StyledAppBarNavigationLinks>
         {navigationLinks.map((link) => (
           <NavigationLink
             {...link}
@@ -32,12 +85,9 @@ const AppBar: React.FC<AppBarProps> = ({ logoSrc, title, navigationLinks }) => {
             {link.title}
           </NavigationLink>
         ))}
-      </div>
-      <Navigation
-        className={navigationClass}
-        navigationLinks={navigationLinks}
-      />
-    </div>
+      </StyledAppBarNavigationLinks>
+      <Navigation navigationLinks={navigationLinks} />
+    </StyledAppBar>
   );
 };
 

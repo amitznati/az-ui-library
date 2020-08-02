@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto:wght@100;300;400;700;900&display=swap');
 
 .story-wrap {
   padding: 3rem;
-  @include respond(tab-port){ //width < 900px
-    padding: 0;
-  }
+  background-color: #eee;
+  //@include respond(tab-port){ //width < 900px
+  //  padding: 0;
+  //}
   &-AppBar {
     padding: 0;
     height: 1500px;
@@ -11,7 +14,7 @@
 }
 .buttons-stories {
   text-align: center;
-  & div .btn {
+  & div button {
     margin: 1rem;
   }
   & div p {
@@ -41,8 +44,8 @@
 .animation-div {
   height: 10rem;
   width: 10rem;
-  background-color: $color-primary;
-  color: $color-white;
+  background-color: #8E3032;
+  color: #fff;
   text-align: center;
   margin: 3rem;
 }
