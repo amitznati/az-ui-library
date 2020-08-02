@@ -1,7 +1,7 @@
 import React from 'react';
 import AppBar from './AppBar';
-// @ts-ignore
 import * as logo from '../../styles/assets/images/ic_launcher_round.png';
+
 export default {
   title: 'AppBar',
   component: AppBar,

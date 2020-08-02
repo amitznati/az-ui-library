@@ -46,5 +46,5 @@ body {
 }
 `;
 
-const CssBaseLine = (): JSX.Element => <StyledCssBaseLine />;
+const CssBaseLine = () => <StyledCssBaseLine />;
 export default CssBaseLine;

@@ -32,13 +32,13 @@ export const ButtonsWithTheme = () => {
       black: 'rgb(0, 0, 0)'
     },
     defaultColor: '#777',
-    fontFamily: 'Assistant'
+    fontFamily: ['Assistant']
   };
   return (
     <ThemeProvider theme={theme}>
       <AppBar
         logoSrc={logo}
-        title="ערכת נושה theme"
+        title="ערכת נושא theme"
         navigationLinks={[
           { title: 'link 1', to: '#' },
           { title: 'link 2', to: '#' }
