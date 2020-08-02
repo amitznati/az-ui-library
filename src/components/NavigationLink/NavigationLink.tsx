@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationLinkProps } from './NavigationLink.types';
 import styled from 'styled-components';
+import { getColor } from '../GlobalStyles/utils';
 
 const getSize = (size): string => {
   switch (size) {
@@ -28,14 +29,14 @@ const styleNav = (props): string => `
   &:not([href]),
   & > * {
     display: inline-block;
-    color: ${props.textColor || '#fff'};
+    color: ${getColor(props.textColor || 'white', props)};
     text-decoration: none;
     text-transform: uppercase;
     background-image: linear-gradient(
       120deg,
       ${props.backgroundColor || 'transparent'} 0%,
       ${props.backgroundColor || 'transparent'} 50%,
-      ${props.backgroundColorHover || '#fff'} 51%
+      ${getColor(props.backgroundColorHover || 'white', props)} 51%
     );
     background-size: 250%;
     transition: all 1s cubic-bezier(0.2, 0.68, 0.09, 1);
@@ -46,11 +47,7 @@ const styleNav = (props): string => `
       props.active &&
       `
     background-position: 100%;
-    color: ${
-      props.textColorHover ||
-      (props.theme.colors && props.theme.colors.primary) ||
-      '#8e3032'
-    };
+    color: ${getColor(props.textColorHover || 'primary', props)};
     box-shadow: 0 0.2rem 0 rgba(0, 0, 0, 0.4);`
     }
   }
@@ -62,22 +59,14 @@ const styleNav = (props): string => `
     &:not([href]):hover,
     &:hover > * {
       background-position: 100%;
-      color: ${
-        props.textColorHover ||
-        (props.theme.colors && props.theme.colors.primary) ||
-        '#8e3032'
-      };
+      color: ${getColor(props.textColorHover || 'primary', props)};
       box-shadow: 0 .5rem 1rem rgba(0, 0 ,0 ,0.4);
     }
   }
   &:not([href]):active,
   &:active > * {
     background-position: 100%;
-    color: ${
-      props.textColorHover ||
-      (props.theme.colors && props.theme.colors.primary) ||
-      '#8e3032'
-    };
+    color: ${getColor(props.textColorHover || 'primary', props)};
     box-shadow: 0 0.2rem 0 rgba(0, 0, 0, 0.4);
   }
 `;

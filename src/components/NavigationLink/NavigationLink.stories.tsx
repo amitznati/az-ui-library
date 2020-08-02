@@ -7,14 +7,11 @@ import {
   text,
   withKnobs
 } from '@storybook/addon-knobs';
-import { jsxDecorator } from 'storybook-addon-jsx';
-// @ts-ignore
-import stylesVars from '../../styles/abstracts/_variables.scss';
 
 export default {
   title: 'NavigationLink',
   component: NavigationLink,
-  decorators: [withKnobs, jsxDecorator]
+  decorators: [withKnobs]
 };
 const groupAppearance = 'NavigationLink-Appearance';
 const groupColors = 'NavigationLink-Colors';
@@ -33,15 +30,11 @@ export const navigationLink = () => {
   );
   const backgroundColorHoverValue = color(
     'backgroundColorHover',
-    stylesVars.whiteColor,
+    'white',
     groupColors
   );
-  const textColorValue = color('textColor', stylesVars.whiteColor, groupColors);
-  const textColorHoverValue = color(
-    'textColorHover',
-    stylesVars.primaryColor,
-    groupColors
-  );
+  const textColorValue = color('textColor', 'white', groupColors);
+  const textColorHoverValue = color('textColorHover', 'primary', groupColors);
   const roundedValue = boolean('rounded', false, groupAppearance);
   return (
     <div className="navigation-stories">
@@ -92,4 +85,3 @@ export const navigationLink = () => {
     </div>
   );
 };
-
