@@ -9,11 +9,11 @@ const hexToRgb = (hex): string => {
         b: parseInt(result[3], 16)
       }
     : null;
-  return rgb ? `${rgb.r}, ${rgb.g}, ${rgb.b}` : '';
+  return rgb ? `${rgb.r}, ${rgb.g}, ${rgb.b}` : hex;
 };
 
 export const getColor = (color, props): string => {
-  const { [color]: themeColor } = props.theme.color || {};
+  const { [color]: themeColor } = props.theme.colors || {};
   const { [color]: defaultColor } = defaultTheme.colors;
   return themeColor || defaultColor || color;
 };

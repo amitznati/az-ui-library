@@ -6,4 +6,6 @@ export default {
   component: CssBaseLine
 };
 
-export const CSSBaseLine = () => <CssBaseLine />;
+export const CSSBaseLine = (): JSX.Element => {
+  return <CssBaseLine />;
+};

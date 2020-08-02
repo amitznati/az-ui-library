@@ -1,7 +1,8 @@
+import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { mediaQueries } from '../GlobalStyles/mixing';
 
-const CssBaseLine = createGlobalStyle`
+const StyledCssBaseLine = createGlobalStyle`
   *,
 *::after,
 *::before {
@@ -45,4 +46,5 @@ body {
 }
 `;
 
+const CssBaseLine = (): JSX.Element => <StyledCssBaseLine />;
 export default CssBaseLine;

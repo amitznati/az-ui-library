@@ -18,7 +18,7 @@ export default {
     greyLight: '#f7f7f7',
     greyDark: '#535353',
     greyDark2: '#333',
-    black: 'rgb(0, 0, 0)'
+    black: '#111111'
   },
   defaultColor: '#777',
   fontFamily: ['Montserrat', 'Assistant'],

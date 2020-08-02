@@ -6,6 +6,9 @@ import defaultTheme from '../GlobalStyles/defaultTheme';
 const ThemeProvider: React.FC<ThemeProviderProps> = ({
   theme = defaultTheme,
   children
-}) => <Theme theme={theme}>{children}</Theme>;
+}) => {
+  const useTheme = { ...defaultTheme, ...theme };
+  return <Theme theme={useTheme}>{children}</Theme>;
+};
 
 export default ThemeProvider;

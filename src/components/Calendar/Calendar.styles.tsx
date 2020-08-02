@@ -4,7 +4,6 @@ import { absCenter, mediaQueries } from '../GlobalStyles/mixing';
 
 export const StyledCalendarContainer = styled.div`
   overflow: hidden;
-  border-radius: 1rem;
   max-width: 55rem;
   background-image: linear-gradient(
     to bottom,
@@ -27,6 +26,7 @@ export const StyledCalendarSelectedDate = styled.div`
     rgba(${(props): string => getColorRGB('black', props)}, 0.3);
   .u-abs-center {
     ${absCenter}
+    width: 100%;
   }
 `;
 
