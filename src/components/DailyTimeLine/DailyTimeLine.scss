@@ -1,0 +1,57 @@
+@import "../../styles/abstracts/variables";
+
+$dayHour: 223.33px;
+$alotHashahar90: 853.33px;
+$alotHashahar72: 923.33px;
+$misheyakir: 1006.67px;
+$sunrise: 1193.33px;
+$sofZmanShma: 1873.33px;
+$sofZmanTfila: 2100.00px;
+$hazot: 2550.00px;
+$minhaGdola: 2663.33px;
+$minhaKtana: 3343.33px;
+$plagMinha: 3626.67px;
+$sunset: 3910.00px;
+$tzetHakohavim: 3976.67px;
+$tzetHakohavimRT: 4180.00px;
+.daily-times {
+  font-size: 1.6rem;
+  text-align: right;
+  position: relative;
+  background-image: linear-gradient(
+    to bottom,
+    rgb(3, 3, 3) 0%,
+rgb(3, 3, 3) $alotHashahar90,
+rgba(30, 152, 209, 1) $sunrise,
+rgb(202, 229, 243) $sofZmanTfila,
+rgb(202, 229, 243) 2500.00px,
+rgb(240, 231, 26) 2550.00px,
+rgb(202, 229, 243) $minhaGdola,
+rgb(202, 229, 243) $plagMinha,
+rgb(245, 86, 12) $sunset,
+      rgb(52, 17, 1) $tzetHakohavim,
+rgb(3, 3, 3) $tzetHakohavimRT,
+rgb(3, 3, 3) 100%
+);
+  &-time {
+    border: 1px solid rgba($color-grey, .3);
+    height: 200px;
+  }
+  &-time-item {
+    position: absolute;
+    right: 1rem;
+    background-color: rgba(0 , 0, 0, .3);
+    color: white;
+    box-shadow: 0 2px 4px white;
+    border: none;
+    &.inDay {
+      background-color: rgba(white, .3);
+      color: black;
+      box-shadow: 0 2px 4px black;
+    }
+    &.now {
+      width: 20rem;
+      right: 5rem;
+    }
+  }
+}

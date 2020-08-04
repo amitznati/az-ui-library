@@ -1,0 +1,44 @@
+@import '../../styles/abstracts/variables';
+.day-time-item {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  background-color: $color-white;
+  padding: 1rem 2rem;
+  box-shadow: $btn-hover-shadow;
+  width: fit-content;
+  border-radius: 100px;
+  &.inDay {
+    background-color: rgba(white, .3);
+    color: black;
+    box-shadow: 0 1rem 2rem rgba($color-black,.4);
+  }
+  &.inNight {
+    background-color: rgba(black, .3);
+    color: white;
+    box-shadow: 0 1rem 2rem rgba($color-white,.4);
+  }
+  &-hour {
+    background-color: $color-primary;
+    font-size: 1.6rem;
+    border-radius: 30px;
+    padding: 0.5rem 1rem;
+    display: inline-table;
+    color: $color-secondary;
+    width: 7rem;
+    text-align: center;
+  }
+  &-text-wrap {
+    text-align: right;
+    margin-right: 1rem;
+    line-height: 1;
+  }
+  &-name {
+    font-size: 2.5rem;
+  }
+  &-desc {
+    font-size: 1.3rem;
+    line-height: 1.3;
+  }
+
+}
