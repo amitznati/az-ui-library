@@ -19,23 +19,36 @@ $tzetHakohavimRT: 4180.00px;
   text-align: right;
   position: relative;
   background-image: linear-gradient(
-    to bottom,
-    rgb(3, 3, 3) 0%,
-rgb(3, 3, 3) $alotHashahar90,
-rgba(30, 152, 209, 1) $sunrise,
-rgb(202, 229, 243) $sofZmanTfila,
-rgb(202, 229, 243) 2500.00px,
-rgb(240, 231, 26) 2550.00px,
-rgb(202, 229, 243) $minhaGdola,
-rgb(202, 229, 243) $plagMinha,
-rgb(245, 86, 12) $sunset,
+      to bottom,
+      rgb(3, 3, 3) 0%,
+      rgb(3, 3, 3) $alotHashahar90,
+      rgba(30, 152, 209, 1) $sunrise,
+      rgb(202, 229, 243) $sofZmanTfila,
+      rgb(202, 229, 243) 2500.00px,
+      rgb(240, 231, 26) $hazot,
+      rgb(202, 229, 243) $minhaGdola,
+      rgb(202, 229, 243) $plagMinha,
+      rgb(245, 86, 12) $sunset,
       rgb(52, 17, 1) $tzetHakohavim,
-rgb(3, 3, 3) $tzetHakohavimRT,
-rgb(3, 3, 3) 100%
-);
+      rgb(3, 3, 3) $tzetHakohavimRT,
+      rgb(3, 3, 3) 100%
+  );
   &-time {
     border: 1px solid rgba($color-grey, .3);
     height: 200px;
+    text-align: left;
+    padding: 1rem;
+  }
+  &-now {
+    border-bottom: 3px solid $color-tertiary;
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: left;
+    padding: 0 1rem;
+    top: 2000px;
+    font-size: 2.6rem;
+    color: black;
   }
   &-time-item {
     position: absolute;
@@ -48,10 +61,6 @@ rgb(3, 3, 3) 100%
       background-color: rgba(white, .3);
       color: black;
       box-shadow: 0 2px 4px black;
-    }
-    &.now {
-      width: 20rem;
-      right: 5rem;
     }
   }
 }

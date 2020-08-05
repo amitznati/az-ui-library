@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@100;200;300;400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto:wght@100;300;400;700;900&display=swap');
 
 .story-wrap {
   padding: 3rem;
   background-color: #eee;
-  //@include respond(tab-port){ //width < 900px
-  //  padding: 0;
-  //}
+  @media (max-width: 56.25em){ //width < 900px
+    padding: 0;
+  }
   &-AppBar {
     padding: 0;
     height: 1500px;

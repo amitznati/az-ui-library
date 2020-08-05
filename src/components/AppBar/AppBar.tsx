@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AppBarProps } from './AppBar.types';
+import { getColor} from '../GlobalStyles/utils';
 
 import NavigationLink from '../NavigationLink/NavigationLink';
 import Navigation from '../Navigation/Navigation';
@@ -11,11 +12,8 @@ const StyledAppBar = styled.div`
   left: 0;
   height: 13rem;
   width: 100%;
-  background-color: ${(props): string =>
-    (props.theme.colors && props.theme.colors.primary) || '#8e3032'};
-  box-shadow: 0 0.2rem 1rem
-    ${(props): string =>
-      (props.theme.colors && props.theme.colors.black) || '#8e3032'};
+  background-color: ${(props): string => getColor('primary', props)};
+  box-shadow: 0 0.2rem 1rem ${(props): string => getColor('primary', props)};
   z-index: 1500;
   @media (max-width: 37.5em) {
     height: 8rem;
@@ -39,8 +37,7 @@ const StyledAppBarIconImage = styled.img`
 const StyledAppBarPageTitle = styled.div`
   text-align: center;
   font-size: 5rem;
-  color: ${(props): string =>
-    (props.theme.colors && props.theme.colors.white) || '#fff'};
+  color: ${(props): string => getColor('white', props)};
   line-height: 1;
   padding-top: 2.5rem;
   @media (max-width: 37.5em) {

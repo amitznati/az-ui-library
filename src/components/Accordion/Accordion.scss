@@ -1,0 +1,42 @@
+@import './src/styles/abstracts/variables';
+.accordion {
+  &-header {
+    font-size: 2rem;
+    text-align: center;
+    color: $color-white;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    line-height: 1;
+    position: relative;
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(black, 0.3);
+    background-color: $color-primary;
+    .u-abs-center {
+      //${absCenter}
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+    }
+
+    .accordion-expand-icon {
+      margin-right: 2rem;
+      svg {
+        transform: rotate(90deg);
+      }
+      &.isOpen {
+        svg {
+          transform: rotate(-90deg);
+        }
+      }
+    }
+  }
+  &-content {
+    overflow: hidden;
+    will-change: max-height;
+    transition: max-height 1s;
+    background-color: $color-white;
+  }
+}

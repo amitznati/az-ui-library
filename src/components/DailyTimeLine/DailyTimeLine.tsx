@@ -1,9 +1,10 @@
 import React from 'react';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 
-// import { DailyTimeLineProps } from './DailyTimeLine.types';
+import { DailyTimeLineProps } from './DailyTimeLine.types';
 import DayTimeItem from '../DayTimeItem/DayTimeItem';
-import './DailyTimeLine.scss';
+import { getColor } from '../GlobalStyles/utils';
+
 const times: Array<string> = [];
 for (let i = 0; i < 10; i += 1) times.push(`0${i}:00`);
 for (let i = 10; i < 24; i += 1) times.push(`${i}:00`);
@@ -11,76 +12,107 @@ const getTimeTop = (time): number => {
   const [h, m] = time.split(':');
   return Number((h * 200 + (m / 60) * 200).toFixed(2));
 };
+const getNowTime = (): string => {
+  const now = new Date();
+  return `${now.getHours()}:${
+    now.getMinutes() < 10 ? `0${now.getMinutes()}` : now.getMinutes()
+  }`;
+};
 
-// const StyledDayTimeLine = styled.div`
-//   font-size: 1.6rem;
-//   text-align: right;
-//   position: relative;
-//   background-image: linear-gradient(
-//     to bottom,
-//     rgb(3, 3, 3) 0%,
-//     rgba(3, 3, 3, 0.9)
-//       ${(props): string => getTimePercentage(props.dayTimes, 'alotHashahar90')}%,
-//     rgba(30, 152, 209, 1)
-//       ${(props): string => getTimePercentage(props.dayTimes, 'sunrise')}%,
-//     rgb(202, 229, 243)
-//       ${(props): string => getTimePercentage(props.dayTimes, 'sunrise', 2)}%,
-//     rgb(202, 229, 243)
-//       ${(props): string => getTimePercentage(props.dayTimes, 'sofZmanTfila')}%,
-//     rgb(240, 231, 26)
-//       ${(props): string => getTimePercentage(props.dayTimes, 'hazot')}%,
-//     rgb(202, 229, 243)
-//       ${(props): string => getTimePercentage(props.dayTimes, 'minhaGdola')}%,
-//     rgb(245, 86, 12)
-//       ${(props): string => getTimePercentage(props.dayTimes, 'plagMinha')}%,
-//     rgba(197, 127, 81, 0.82)
-//       ${(props): string => getTimePercentage(props.dayTimes, 'sunset')}%,
-//     rgba(5, 5, 5, 1)
-//       ${(props): string => getTimePercentage(props.dayTimes, 'tzetHakohavim')}%,
-//     rgb(54, 55, 56)
-//       ${(props): string =>
-//         getTimePercentage(props.dayTimes, 'tzetHakohavimRT')}%,
-//     rgb(3, 3, 3) 100%
-//   );
-// `;
-const DailyTimeLine: React.FC<{
-  dayTimes: Array<{ key: string; title: string; time: string }>;
-}> = ({ dayTimes }) => {
-  const arr = dayTimes.map(
-    (dayTime) => `$${dayTime.key}: ${getTimeTop(dayTime.time)};`
+const getStyledDayTimeLineStyle = (props): string => {
+  const getTopForTime = (name): number => {
+    const dayTime = props.dayTimes.find((t) => t.key === name);
+    return dayTime ? getTimeTop(dayTime.time) : 0;
+  };
+  return `
+  font-size: 1.6rem;
+  text-align: right;
+  position: relative;
+  background-image: linear-gradient(
+    to bottom,
+    rgb(3, 3, 3) 0%,
+    rgb(3, 3, 3) ${getTopForTime('alotHashahar90')}px,
+    rgba(30, 152, 209, 1) ${getTopForTime('sunrise')}px,
+    rgb(202, 229, 243) ${getTopForTime('sofZmanTfila')}px,
+    rgb(202, 229, 243) ${getTopForTime('hazot') - 50}px,
+    rgb(240, 231, 26) ${getTopForTime('hazot')}px,
+    rgb(202, 229, 243) ${getTopForTime('minhaGdola')}px,
+    rgb(202, 229, 243) ${getTopForTime('plagMinha')}px,
+    rgb(245, 86, 12) ${getTopForTime('sunset')}px,
+    rgb(52, 17, 1) ${getTopForTime('tzetHakohavim')}px,
+    rgb(3, 3, 3) ${getTopForTime('tzetHakohavimRT')}px,
+    rgb(3, 3, 3) 100%
   );
-  console.log(...arr);
+
+  .daily-times-time {
+    border: 1px solid rgba(160, 160, 160, 0.3);
+    height: 200px;
+    text-align: left;
+    padding: 1rem;
+  }
+  .daily-times-now {
+    border-top: 3px solid ${getColor('tertiary', props)};
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: left;
+    padding: 0 4rem;
+    top: ${getTimeTop(getNowTime())}px;
+    font-size: 2.6rem;
+    color: black;
+    line-height: 1;
+  }
+  .daily-times-time-item {
+    position: absolute;
+    right: 1rem;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    box-shadow: 0 2px 4px white;
+    border: none;
+  }
+  `;
+};
+
+const StyledDayTimeLine = styled.div`
+  ${(props): string => getStyledDayTimeLineStyle(props)}
+`;
+
+const StyledDayTimesItem = styled(DayTimeItem)`
+  position: absolute;
+  right: 1rem;
+  top: ${(props): number => getTimeTop(props.hour)}px;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  box-shadow: 0 2px 4px white;
+  border: none;
+`;
+
+const DailyTimeLine: React.FC<DailyTimeLineProps> = ({ dayTimes }) => {
   return (
-    <div className="daily-times">
+    <StyledDayTimeLine {...{ dayTimes }}>
       {times.map((time) => (
         <div key={time} className="daily-times-time">
           {time}
         </div>
       ))}
+      <div className="daily-times-now">
+        <div>עכשיו</div>
+        <div>{getNowTime()}</div>
+      </div>
       {dayTimes.map((dayTime) => {
-        const top = getTimeTop(dayTime.time);
-        const inDay = top > 1100 && top < 3700;
+        const inDay = dayTime.inDay;
         return (
-          <DayTimeItem
+          <StyledDayTimesItem
             inDayTime={inDay}
             inNightTime={!inDay}
-            className="daily-times-time-item"
             key={dayTime.key}
-            style={{ top: top + 'px' }}
+            // style={{ top: top + 'px' }}
             hour={dayTime.time}
             name={dayTime.title}
           />
         );
       })}
-      {/* <DayTimeItem */}
-      {/*  className="daily-times-time-item now" */}
-      {/*  style={{ */}
-      {/*    top: getTimeTop('04:30') */}
-      {/*  }} */}
-      {/*  hour="04:30" */}
-      {/*  name="עכשיו" */}
-      {/* /> */}
-    </div>
+    </StyledDayTimeLine>
   );
 };
 export default DailyTimeLine;

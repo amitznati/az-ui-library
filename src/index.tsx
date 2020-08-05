@@ -8,4 +8,6 @@ export { default as CardsSwift } from './components/CardsSwift/CardsSwift';
 export { default as IconButton } from './components/IconButton/IconButton';
 export { default as CssBaseLine } from './components/CssBaseLine/CssBaseLine';
 export { default as ThemeProvider } from './components/ThemeProvider/ThemeProvider';
+export { default as DailyTimeLine } from './components/DailyTimeLine/DailyTimeLine';
+export { default as DayTimeItem } from './components/DayTimeItem/DayTimeItem';
 export { hooks };

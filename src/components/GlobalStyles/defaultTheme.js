@@ -1,16 +1,16 @@
 export default {
   colors: {
-    primary: '#30708e',
-    primaryDark: '#214c63',
-    primaryLight: '#598aa4',
+    primary: '#8e3032',
+    primaryDark: '#4b191a',
+    primaryLight: '#9c6364',
 
-    secondary: '#e83cc1',
-    secondaryDark: '#5b115e',
-    secondaryLight: '#e794ea',
+    secondary: '#debb0b',
+    secondaryDark: '#675603',
+    secondaryLight: '#dbc76a',
 
     tertiary: '#79d239',
-    tertiaryLight: '#caecb3',
     tertiaryDark: '#2d6107',
+    tertiaryLight: '#caecb3',
 
     white: '#ffffff',
     grey: '#777',

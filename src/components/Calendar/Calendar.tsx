@@ -16,8 +16,10 @@ import {
   StyledCalendarWeek,
   StyledCalendarMonth,
   StyledCalendarMonthContainer,
-  StyledCalendarMonthPlaceholder, StyledCalendarDay, StyledCalendarDayName
-} from './Calendar.styles'
+  StyledCalendarMonthPlaceholder,
+  StyledCalendarDay,
+  StyledCalendarDayName
+} from './Calendar.styles';
 
 // window.Hebcal = Hebcal;
 
