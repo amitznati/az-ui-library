@@ -3,8 +3,6 @@ import styled from 'styled-components';
 
 import { AccordionProps } from './Accordion.types';
 
-// import './Accordion.scss';
-
 import IconButton from '../IconButton/IconButton';
 import { ReactComponent as ArrowIcon } from '../../styles/assets/icons/arrow_forward_ios-24px.svg';
 import { absCenter } from '../GlobalStyles/mixing';
