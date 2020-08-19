@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AppBarProps } from './AppBar.types';
-import { getColor} from '../GlobalStyles/utils';
+import { getColor } from '../GlobalStyles/utils';
 
 import NavigationLink from '../NavigationLink/NavigationLink';
 import Navigation from '../Navigation/Navigation';

@@ -46,40 +46,66 @@ const getStyledAccordion = (props): string => {
 const StyledAccordion = styled.div`
   ${(props): string => getStyledAccordion(props)}
 `;
-export const Accordion: React.FC<AccordionProps> = ({
-  header,
-  children,
-  ...rest
-}) => {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [contentHeight, setContentHeight] = React.useState(0);
-  const contentRef = React.createRef<HTMLDivElement>();
-  React.useEffect(() => {
-    if (contentRef.current) {
-      setContentHeight(contentRef.current.scrollHeight);
+
+export class Accordion extends React.Component<
+  AccordionProps,
+  { isOpen: boolean; contentHeight?: number }
+> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false,
+      contentHeight: 0
+    };
+  }
+
+  private contentRef = React.createRef<HTMLDivElement>();
+  componentDidMount(): void {
+    this.setState({ contentHeight: this.contentRef.current?.scrollHeight });
+  }
+
+  componentDidUpdate(): void {
+    if (this.contentRef.current?.scrollHeight !== this.state.contentHeight) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ contentHeight: this.contentRef.current?.scrollHeight });
     }
-  }, [contentRef.current]);
-  const toggleAccordion = (): void => {
-    setIsOpen(!isOpen);
+  }
+
+  toggleAccordion = (): void => {
+    this.setState((s) => ({
+      isOpen: !s.isOpen
+    }));
   };
 
-  return (
-    <StyledAccordion
-      {...{ contentHeight, isOpen }}
-      aria-expanded={isOpen}
-      {...rest}
-    >
-      <div className="accordion-header">
-        <span className="u-abs-center">{header}</span>
-        <div className="accordion-expand-icon">
-          <IconButton size={30} iconSrc={ArrowIcon} onClick={toggleAccordion} />
+  render(): JSX.Element {
+    const { header, children, ...rest } = this.props;
+    const { contentHeight, isOpen } = this.state;
+    return (
+      <StyledAccordion
+        {...{ contentHeight, isOpen }}
+        aria-expanded={isOpen}
+        {...rest}
+      >
+        <div className="accordion-header">
+          <span className="u-abs-center">{header}</span>
+          <div className="accordion-expand-icon">
+            <IconButton
+              size={30}
+              iconSrc={ArrowIcon}
+              onClick={this.toggleAccordion}
+            />
+          </div>
         </div>
-      </div>
-      <div ref={contentRef} className="accordion-content" aria-hidden={!isOpen}>
-        {children}
-      </div>
-    </StyledAccordion>
-  );
-};
+        <div
+          ref={this.contentRef}
+          className="accordion-content"
+          aria-hidden={!isOpen}
+        >
+          {children}
+        </div>
+      </StyledAccordion>
+    );
+  }
+}
 
 export default Accordion;
