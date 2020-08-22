@@ -109,9 +109,7 @@ export const StyledCalendarMonthContainer = styled.div`
 `;
 
 export const StyledCalendarMonth = styled.div`
-  @import 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css';
   background-color: ${(props): string => getColor('white', props)};
-  padding: 0.6rem 0;
   border-radius: 0.6rem;
   box-shadow: ${(props): string => props.theme.shadows.active};
   overflow: hidden;
@@ -122,10 +120,7 @@ export const StyledCalendarMonth = styled.div`
 `;
 
 export const StyledCalendarMonthPlaceholder = styled(StyledCalendarMonth)`
-  height: 51.5rem;
-  ${mediaQueries.phone} {
-    height: 49rem;
-  }
+  height: 48rem;
 `;
 
 export const StyledCalendarDay = styled.div`
@@ -137,18 +132,16 @@ export const StyledCalendarDay = styled.div`
   padding: 1rem;
   letter-spacing: 1px;
   background-color: ${(props): string => getColor('white', props)};
-  font-size: 1.2rem;
+  font-size: 1rem;
   box-sizing: border-box;
   color: ${(props): string => getColor('primaryDark', props)};
-  width: calc(100% / 7 - 0.6rem);
+  width: calc(100% / 7);
   display: inline-flex;
   flex-direction: column;
   height: 8rem;
-  margin: 0.2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+  margin: 0;
   cursor: pointer;
   line-height: 1.2;
-  word-break: break-word;
   overflow: hidden;
   justify-content: space-between;
 
@@ -161,6 +154,7 @@ export const StyledCalendarDay = styled.div`
 
   ${mediaQueries.tabPort} {
     padding: 1rem;
+    font-size: 1.2rem;
   }
   ${mediaQueries.phone} {
     padding: 0.5rem;

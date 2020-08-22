@@ -165,11 +165,15 @@ class Calendar extends React.Component<
 
   renderCalendarMonth(month: Month): JSX.Element {
     let calendarDayIndex = -month.days[0].getDay();
-    const prevMonth = month.prev();
-    const nextMonth = month.next();
-    const days: Array<JSX.Element> = [];
+    const prevMonth = this.state.months[this.state.activeMonth - 1];
+    const nextMonth = this.state.months[this.state.activeMonth + 1];
+    const days: Array<JSX.Element | null> = [];
     for (let i = calendarDayIndex; i < 0; i += 1) {
-      days.push(this.renderDay(prevMonth.days[prevMonth.length + i], true));
+      days.push(
+        prevMonth
+          ? this.renderDay(prevMonth.days[prevMonth.length + i], true)
+          : null
+      );
       // days.push(null);
     }
     month.days.forEach((day) => days.push(this.renderDay(day, false)));
@@ -178,7 +182,7 @@ class Calendar extends React.Component<
       i < 42 - (month.length + Math.abs(calendarDayIndex));
       i += 1
     ) {
-      days.push(this.renderDay(nextMonth.days[i], true));
+      days.push(nextMonth ? this.renderDay(nextMonth.days[i], true) : null);
       // days.push(null);
     }
     calendarDayIndex = 0;
@@ -237,7 +241,9 @@ class Calendar extends React.Component<
       <StyledCalendarContainer>
         {/* <h1>{time.toISOString()}</h1> */}
         <StyledCalendarSelectedDate>
-          <span className="u-abs-center">{this.getSelectedDateText()}</span>
+          <span className="u-abs-center">
+            {this.getSelectedDateText()}
+          </span>
           <StyledCalendarExpandIcon isOpen={calendarOpen}>
             <IconButton
               size={30}

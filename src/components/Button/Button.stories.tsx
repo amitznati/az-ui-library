@@ -1,7 +1,8 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import Button from './Button';
-
+import ButtonWithIcon from './ButtonWithIcon';
+import { ReactComponent as TargetIcon } from '../../styles/assets/icons/dot-circle-regular.svg';
 export default {
   title: 'Button',
   component: Button,
@@ -100,6 +101,50 @@ export const all = () => {
         >
           background = rebeccapurple, text = white
         </Button>
+      </div>
+    </div>
+  );
+};
+
+export const withIcon = () => {
+  return (
+    <div>
+      <ButtonWithIcon icon={TargetIcon}>Button with icon</ButtonWithIcon>
+      <div>
+        <p>Right</p>
+        <ButtonWithIcon iconRight icon={TargetIcon}>
+          Right Icon
+        </ButtonWithIcon>
+      </div>
+      <div>
+        <p>Sizes</p>
+        <ButtonWithIcon size="large" icon={TargetIcon}>
+          Large
+        </ButtonWithIcon>
+        <ButtonWithIcon size="medium" icon={TargetIcon}>
+          Medium
+        </ButtonWithIcon>
+        <ButtonWithIcon size="small" icon={TargetIcon}>
+          Small
+        </ButtonWithIcon>
+        <ButtonWithIcon size="tiny" icon={TargetIcon}>
+          Tiny
+        </ButtonWithIcon>
+      </div>
+      <div>
+        <p>Sizes</p>
+        <ButtonWithIcon rounded size="large" icon={TargetIcon}>
+          Large
+        </ButtonWithIcon>
+        <ButtonWithIcon rounded size="medium" icon={TargetIcon}>
+          Medium
+        </ButtonWithIcon>
+        <ButtonWithIcon rounded size="small" icon={TargetIcon}>
+          Small
+        </ButtonWithIcon>
+        <ButtonWithIcon rounded size="tiny" icon={TargetIcon}>
+          Tiny
+        </ButtonWithIcon>
       </div>
     </div>
   );

@@ -94,7 +94,7 @@ const CardsSwift: React.FC<CardsSwiftProps> = ({
     <StyledCardsSwiftContainer style={height ? { height } : {}}>
       <StyledCardsSwift>
         {data.map((item, i) =>
-          Math.abs(activeIndex - i) > itemToShow + 1 ? null : (
+          Math.abs(activeIndex - i) > itemToShow ? null : (
             <StyledCardsSwiftItem
               key={`cards-swift-card-${i}`}
               index={i}

@@ -5,20 +5,20 @@ import styled from 'styled-components';
 const getSize = (size): string => {
   switch (size) {
     case 'large':
-      return `font-size: 2rem;
-    padding: 2rem 5rem;`;
+      return `font-size: 2.5rem;
+    padding: 2rem 3.5rem;`;
     case 'medium':
       return `font-size: 1.6rem;
-    padding: 1.5rem 4rem;`;
+    padding: 1.5rem 2.5rem;`;
     case 'small':
       return `font-size: 1.2rem;
-    padding: 1rem 3rem;`;
+    padding: 1rem 2rem;`;
     case 'tiny':
       return `font-size: .8rem;
-    padding: .5rem 2rem;`;
+    padding: .5rem 1rem;`;
     default:
       return `font-size: 1.6rem;
-      padding: 1.5rem 4rem;`;
+      padding: 1.5rem 2.5rem;`;
   }
 };
 
