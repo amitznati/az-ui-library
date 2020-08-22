@@ -11,4 +11,5 @@ export interface CardsSwiftProps {
   onSwiftRight?: () => void;
   onSwiftLeft?: () => void;
   itemToShow?: number;
+  speed?: number;
 }

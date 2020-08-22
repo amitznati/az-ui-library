@@ -71,16 +71,13 @@ export const StyledCalendarHeader = styled.div`
   line-height: 1.4;
 
   .calendar-header-month {
-    display: inline-block;
-    width: 40%;
+    display: inline-flex;
+    width: 80%;
+    justify-content: space-between;
     .arrow-up {
       svg {
         transform: rotate(180deg);
       }
-      float: left;
-    }
-    .arrow-down {
-      float: right;
     }
     .calendar-header-text {
     }
@@ -112,6 +109,7 @@ export const StyledCalendarMonthContainer = styled.div`
 `;
 
 export const StyledCalendarMonth = styled.div`
+  @import 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css';
   background-color: ${(props): string => getColor('white', props)};
   padding: 0.6rem 0;
   border-radius: 0.6rem;
@@ -157,12 +155,12 @@ export const StyledCalendarDay = styled.div`
   .day-dates {
     display: inline-flex;
     justify-content: space-between;
+    flex-direction: column;
+    font-size: 1.5rem;
   }
 
   ${mediaQueries.tabPort} {
     padding: 1rem;
-    font-size: 1.5rem;
-    word-break: break-all;
   }
   ${mediaQueries.phone} {
     padding: 0.5rem;

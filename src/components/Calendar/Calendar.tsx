@@ -6,6 +6,7 @@ import CardsSwift from '../CardsSwift/CardsSwift';
 import IconButton from '../IconButton/IconButton';
 
 import { ReactComponent as ArrowIcon } from '../../styles/assets/icons/arrow_forward_ios-24px.svg';
+import { ReactComponent as FastArrowIcon } from '../../styles/assets/icons/arrow_fast_forward_ios-24px.svg';
 import {
   StyledCalendarExpandIcon,
   StyledCalendarContainer,
@@ -42,6 +43,9 @@ const getEventText = (
       `${monthsArrayHe[heDate.next().month - 1]} `
     );
   }
+  if (text) {
+    text = text.replace('חוה"מ', '').replace('(', '').replace(')', '');
+  }
   return text;
 };
 
@@ -51,119 +55,158 @@ const renderCalendarPlaceHolder = (): JSX.Element => {
   );
 };
 
-const Calendar: React.FC<CalendarProps> = ({
-  selectedDate,
-  onSelectDate,
-  autoCloseOnSelect
-}) => {
-  const year = new Hebcal.GregYear();
-  const [activeMonth, setActiveMonth] = React.useState(new Date().getMonth());
-  const [calendarOpen, setCalendarOpen] = React.useState(false);
-  const [months, setMonths] = React.useState(year.months);
-  const [holidays, setHolidays] = React.useState(year.holidays);
-  // TESTING
-  // const [time, setTime] = React.useState(new Date());
-  // React.useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setTime(new Date());
-  //   }, 1000);
-  //   return () => clearInterval(interval);
-  // }, []);
-  // END
-  const toggleCalendar = (): void => setCalendarOpen(!calendarOpen);
-  const moveMonthUp = (): void => {
-    setActiveMonth(activeMonth + 1);
+class Calendar extends React.Component<
+  CalendarProps,
+  {
+    calendarOpen: boolean;
+    activeMonth: number;
+    months: Array<Month>;
+    holidays: Array<HeEvent>;
+  }
+> {
+  constructor(props) {
+    super(props);
+    const year = new Hebcal.GregYear();
+    this.state = {
+      calendarOpen: false,
+      activeMonth: new Date().getMonth(),
+      months: year.months,
+      holidays: year.holidays
+    };
+    this.toggleCalendar = this.toggleCalendar.bind(this);
+    this.moveMonthUp = this.moveMonthUp.bind(this);
+    this.moveMonthDown = this.moveMonthDown.bind(this);
+    this.moveYearUp = this.moveYearUp.bind(this);
+    this.moveYearDown = this.moveYearDown.bind(this);
+    this.moveYear = this.moveYear.bind(this);
+    this.getSelectedDateText = this.getSelectedDateText.bind(this);
+    this.getHeYearName = this.getHeYearName.bind(this);
+    this.getHeMonthName = this.getHeMonthName.bind(this);
+    this.renderCalendarMonth = this.renderCalendarMonth.bind(this);
+    this.renderDay = this.renderDay.bind(this);
+  }
+
+  toggleCalendar(): void {
+    this.setState((s) => ({
+      calendarOpen: !s.calendarOpen
+    }));
+  }
+
+  moveMonthUp(): void {
+    const { activeMonth, months, holidays } = this.state;
+    this.setState({ activeMonth: activeMonth + 1 });
     if (activeMonth + 5 > months.length) {
       const newYear = new Hebcal.GregYear(months[activeMonth].year + 1);
-      setMonths([...months, ...newYear.months]);
-      setHolidays({
-        ...holidays,
-        ...newYear.holidays
+      this.setState({
+        months: [...months, ...newYear.months],
+        holidays: {
+          ...holidays,
+          ...newYear.holidays
+        }
       });
     }
-  };
-  const moveMonthDown = (): void => {
-    setActiveMonth(activeMonth - 1);
+  }
+
+  moveMonthDown(): void {
+    const { activeMonth, months, holidays } = this.state;
+    this.setState({ activeMonth: activeMonth - 1 });
     if (activeMonth <= 2) {
       const id = setTimeout(() => {
         const newYear = new Hebcal.GregYear(months[activeMonth].year - 1);
-        setMonths([...newYear.months, ...months]);
-        setHolidays({
-          ...newYear.holidays,
-          ...holidays
+        this.setState({
+          months: [...newYear.months, ...months],
+          holidays: { ...newYear.holidays, ...holidays },
+          activeMonth: activeMonth + 11
         });
-        setActiveMonth(activeMonth + 11);
         clearTimeout(id);
       }, 600);
     }
-  };
-  const moveYearUp = (): void => {
-    const year = new Hebcal.GregYear(months[activeMonth].year + 1);
-    setMonths(year.months);
-    setHolidays(year.holidays);
-    setActiveMonth(activeMonth % 12);
-  };
-  const moveYearDown = (): void => {
-    const year = new Hebcal.GregYear(months[activeMonth].year - 1);
-    setMonths(year.months);
-    setHolidays(year.holidays);
-    setActiveMonth(activeMonth % 12);
-  };
-  const renderCalendarMonth = (month: Month): JSX.Element => {
+  }
+
+  moveYear(toAdd): void {
+    const { activeMonth, months } = this.state;
+    const year = new Hebcal.GregYear(months[activeMonth].year + toAdd);
+    this.setState({
+      months: year.months,
+      holidays: year.holidays,
+      activeMonth: activeMonth % 12
+    });
+  }
+
+  moveYearUp(): void {
+    this.moveYear(1);
+  }
+
+  moveYearDown(): void {
+    this.moveYear(-1);
+  }
+
+  renderDay(day: HeDay, isDisable): JSX.Element {
+    const { autoCloseOnSelect, onSelectDate } = this.props;
+    const key = [day.day, day.month, day.year].join('-');
+    const { holidays } = this.state;
+    return (
+      <StyledCalendarDay
+        key={key}
+        isDisable={isDisable}
+        onClick={(): void => {
+          onSelectDate(day.greg());
+          autoCloseOnSelect && this.toggleCalendar();
+        }}
+      >
+        <div className="day-dates">
+          <span>{day.greg().getDate()}</span>
+          <span>{Hebcal.gematriya(day.day)}</span>
+        </div>
+        <span>{getEventText(holidays[day.toString()], day)}</span>
+      </StyledCalendarDay>
+    );
+  }
+
+  renderCalendarMonth(month: Month): JSX.Element {
     let calendarDayIndex = -month.days[0].getDay();
-    const days: Array<HeDay> = [];
+    const prevMonth = month.prev();
+    const nextMonth = month.next();
+    const days: Array<JSX.Element> = [];
     for (let i = calendarDayIndex; i < 0; i += 1) {
-      days.push(
-        months[activeMonth - 1].days[months[activeMonth - 1].length + i]
-      );
+      days.push(this.renderDay(prevMonth.days[prevMonth.length + i], true));
+      // days.push(null);
     }
-    days.push(...month.days);
+    month.days.forEach((day) => days.push(this.renderDay(day, false)));
     for (
       let i = 0;
       i < 42 - (month.length + Math.abs(calendarDayIndex));
       i += 1
     ) {
-      days.push(months[activeMonth + 1].days[i]);
+      days.push(this.renderDay(nextMonth.days[i], true));
+      // days.push(null);
     }
     calendarDayIndex = 0;
     return (
       <StyledCalendarMonth>
         {[0, 1, 2, 3, 4, 5].map((week) => (
           <StyledCalendarWeek key={`week-${week}`}>
-            {[0, 1, 2, 3, 4, 5, 6].map((d) => {
+            {[0, 1, 2, 3, 4, 5, 6].map(() => {
               const day = days[calendarDayIndex];
               calendarDayIndex += 1;
-              const key = ['day', month.month, week, d].join('-');
-              const isDisable = day.greg().getMonth() !== month.month - 1;
-              return (
-                <StyledCalendarDay
-                  key={key}
-                  isDisable={isDisable}
-                  onClick={(): void => {
-                    onSelectDate(day.greg());
-                    autoCloseOnSelect && toggleCalendar();
-                  }}
-                >
-                  <div className="day-dates">
-                    <span>{day.greg().getDate()}</span>
-                    <span>{Hebcal.gematriya(day.day)}</span>
-                  </div>
-                  <span>{getEventText(holidays[day.toString()], day)}</span>
-                </StyledCalendarDay>
-              );
+              return day;
             })}
           </StyledCalendarWeek>
         ))}
       </StyledCalendarMonth>
     );
-  };
-  const getHeMonthName = (): string => {
+  }
+
+  getHeMonthName(): string {
+    const { activeMonth, months } = this.state;
     const hebmonths = months[activeMonth].hebmonths.map(
       (heMonth) => monthsArrayHe[heMonth.month - 1]
     );
     return hebmonths.join(hebmonths.length > 1 ? '-' : '');
-  };
-  const getHeYearName = (): string => {
+  }
+
+  getHeYearName(): string {
+    const { activeMonth, months } = this.state;
     const heyears = months[activeMonth].hebmonths.map((heMonth) =>
       Hebcal.gematriya(heMonth.year)
     );
@@ -171,8 +214,10 @@ const Calendar: React.FC<CalendarProps> = ({
       return heyears.join('-');
     }
     return heyears[0];
-  };
-  const getSelectedDateText = (): string => {
+  }
+
+  getSelectedDateText(): string {
+    const { selectedDate } = this.props;
     const heDate = new Hebcal.HDate(selectedDate);
     const str = [
       Hebcal.gematriya(heDate.day),
@@ -184,86 +229,89 @@ const Calendar: React.FC<CalendarProps> = ({
       selectedDate.getFullYear()
     ];
     return str.join(' ');
-  };
-  return (
-    <StyledCalendarContainer>
-      {/* <h1>{time.toISOString()}</h1> */}
-      <StyledCalendarSelectedDate>
-        <span className="u-abs-center">{getSelectedDateText()}</span>
-        <StyledCalendarExpandIcon isOpen={calendarOpen}>
-          <IconButton
-            size={30}
-            className="calendar-expand-icon__icon"
-            iconSrc={ArrowIcon}
-            onClick={toggleCalendar}
-          />
-        </StyledCalendarExpandIcon>
-      </StyledCalendarSelectedDate>
-      <StyledCalendarMain isOpen={calendarOpen}>
-        <StyledCalendarHeader>
-          <div>
+  }
+
+  render(): JSX.Element {
+    const { calendarOpen, activeMonth, months } = this.state;
+    return (
+      <StyledCalendarContainer>
+        {/* <h1>{time.toISOString()}</h1> */}
+        <StyledCalendarSelectedDate>
+          <span className="u-abs-center">{this.getSelectedDateText()}</span>
+          <StyledCalendarExpandIcon isOpen={calendarOpen}>
+            <IconButton
+              size={30}
+              className="calendar-expand-icon__icon"
+              iconSrc={ArrowIcon}
+              onClick={this.toggleCalendar}
+            />
+          </StyledCalendarExpandIcon>
+        </StyledCalendarSelectedDate>
+        <StyledCalendarMain isOpen={calendarOpen}>
+          <StyledCalendarHeader>
             <div>
               <span className="calendar-header-month">
                 <IconButton
-                  onClick={moveYearUp}
+                  onClick={this.moveYearUp}
+                  iconSrc={FastArrowIcon}
+                  size={30}
+                  className="arrow-up"
+                />
+                <IconButton
+                  onClick={this.moveMonthUp}
                   iconSrc={ArrowIcon}
                   size={30}
                   className="arrow-up"
                 />
                 <span>{months[activeMonth].year}</span>
+                <span className="calendar-header-text">
+                  {monthsArrayTranslate[months[activeMonth].month - 1]}
+                </span>
                 <IconButton
-                  onClick={moveYearDown}
+                  onClick={this.moveMonthDown}
                   iconSrc={ArrowIcon}
+                  size={30}
+                  className="arrow-down"
+                />
+                <IconButton
+                  onClick={this.moveYearDown}
+                  iconSrc={FastArrowIcon}
                   size={30}
                   className="arrow-down"
                 />
               </span>
             </div>
             <div>
-              <span className="calendar-header-month">
-                <IconButton
-                  onClick={moveMonthUp}
-                  iconSrc={ArrowIcon}
-                  size={30}
-                  className="arrow-up"
-                />
-                <span className="calendar-header-text">
-                  {monthsArrayTranslate[months[activeMonth].month - 1]}
-                </span>
-                <IconButton
-                  onClick={moveMonthDown}
-                  iconSrc={ArrowIcon}
-                  size={30}
-                  className="arrow-down"
-                />
+              <span className="calendar-header-month-he">
+                {this.getHeMonthName()}
+              </span>
+              <span className="calendar-header-year">
+                {this.getHeYearName()}
               </span>
             </div>
-          </div>
-          <div>
-            <span className="calendar-header-month-he">{getHeMonthName()}</span>
-            <span className="calendar-header-year">{getHeYearName()}</span>
-          </div>
-        </StyledCalendarHeader>
-        <StyledCalendarWeekDays>
-          {heDaysLong.map((day) => (
-            <StyledCalendarDayName key={day}>{day}</StyledCalendarDayName>
-          ))}
-        </StyledCalendarWeekDays>
-        <StyledCalendarMonthContainer>
-          <CardsSwift
-            data={months}
-            activeIndex={activeMonth}
-            renderItem={renderCalendarMonth}
-            renderPlaceHolderItem={renderCalendarPlaceHolder}
-            onSwiftLeft={moveMonthUp}
-            onSwiftRight={moveMonthDown}
-            // height={isPhone ? '50rem' : '52rem'}
-            itemToShow={3}
-          />
-        </StyledCalendarMonthContainer>
-      </StyledCalendarMain>
-    </StyledCalendarContainer>
-  );
-};
+          </StyledCalendarHeader>
+          <StyledCalendarWeekDays>
+            {heDaysLong.map((day) => (
+              <StyledCalendarDayName key={day}>{day}</StyledCalendarDayName>
+            ))}
+          </StyledCalendarWeekDays>
+          <StyledCalendarMonthContainer>
+            <CardsSwift
+              data={months}
+              activeIndex={activeMonth}
+              renderItem={this.renderCalendarMonth}
+              renderPlaceHolderItem={renderCalendarPlaceHolder}
+              onSwiftLeft={this.moveMonthUp}
+              onSwiftRight={this.moveMonthDown}
+              // height={isPhone ? '50rem' : '52rem'}
+              itemToShow={2}
+              // speed={0.3}
+            />
+          </StyledCalendarMonthContainer>
+        </StyledCalendarMain>
+      </StyledCalendarContainer>
+    );
+  }
+}
 
 export default Calendar;

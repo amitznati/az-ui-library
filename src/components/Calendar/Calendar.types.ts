@@ -7,6 +7,8 @@ export interface Month {
   il: boolean;
   lat: number;
   long: number;
+  prev: () => Month;
+  next: () => Month;
 }
 
 export interface HeDay {

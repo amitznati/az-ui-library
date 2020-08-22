@@ -3,10 +3,11 @@ import { CardsSwiftProps } from './CardsSwift.types';
 import styled from 'styled-components';
 
 const getItemStyle = (props): string => {
-  const { index, itemToShow, activeIndex } = props;
+  const { index, itemToShow, activeIndex, speed = 0.5 } = props;
   const ratio = Math.min(itemToShow, Math.abs(activeIndex - index));
   const isBig = index > activeIndex;
   return `
+      transition: all ${speed}s;
       opacity: ${1 - ratio * 0.1};
       left: ${
         ratio !== 0
@@ -41,7 +42,6 @@ const StyledCardsSwiftItem = styled.div`
   height: 100%;
   width: 90%;
   display: inline-table;
-  transition: all 0.5s;
   ${(props): string => getItemStyle(props)}
 `;
 
@@ -53,7 +53,8 @@ const CardsSwift: React.FC<CardsSwiftProps> = ({
   onSwiftRight,
   onSwiftLeft,
   renderPlaceHolderItem,
-  itemToShow = 5
+  itemToShow = 5,
+  speed = 0.5
 }) => {
   // const getItemClass = (index: number) =>
   //   activeIndex - index >= 0
@@ -97,6 +98,7 @@ const CardsSwift: React.FC<CardsSwiftProps> = ({
             <StyledCardsSwiftItem
               key={`cards-swift-card-${i}`}
               index={i}
+              speed={speed}
               activeIndex={activeIndex}
               itemToShow={itemToShow}
               onTouchStart={onSwiftLeft && onSwiftRight && onTouchStart}
