@@ -38,7 +38,7 @@ const getStyledAccordion = (props): string => {
     overflow: hidden;
     max-height: ${props.isOpen ? props.contentHeight : 0}px;
     will-change: max-height;
-    transition: max-height 1s cubic-bezier(0.2, 0.68, 0.09, 1);
+    transition: max-height 0.8s cubic-bezier(0.2, 0.68, 0.09, 1);
     background-color: ${getColor('white', props)};
   }
 `;
