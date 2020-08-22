@@ -8,13 +8,16 @@ const getItemStyle = (props): string => {
   const isBig = index > activeIndex;
   return `
       transition: all ${speed}s;
+      width: ${100 - itemToShow * 2}%;
       opacity: ${1 - ratio * 0.1};
       left: ${
         ratio !== 0
-          ? `calc(${isBig ? '-' : ''}5px + ${
-              isBig ? `-7% - ${ratio}%` : `17% + ${ratio}%`
+          ? `calc(${isBig ? '-' : ''}${itemToShow}px + ${
+              isBig
+                ? `-${14.5 - itemToShow * 1.5}% - ${ratio}%`
+                : `${14.5 + itemToShow / 2}% + ${ratio}%`
             })`
-          : '5%'
+          : `${itemToShow}%`
       };
       z-index: ${100 - ratio};
       transform: ${
@@ -40,7 +43,6 @@ const StyledCardsSwift = styled.div`
 const StyledCardsSwiftItem = styled.div`
   position: absolute;
   height: 100%;
-  width: 90%;
   display: inline-table;
   ${(props): string => getItemStyle(props)}
 `;

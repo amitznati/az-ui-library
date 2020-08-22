@@ -311,7 +311,7 @@ class Calendar extends React.Component<
               onSwiftRight={this.moveMonthDown}
               // height={isPhone ? '50rem' : '52rem'}
               itemToShow={2}
-              // speed={0.3}
+              speed={0.3}
             />
           </StyledCalendarMonthContainer>
         </StyledCalendarMain>
