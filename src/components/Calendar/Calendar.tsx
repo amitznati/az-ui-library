@@ -7,6 +7,7 @@ import IconButton from '../IconButton/IconButton';
 
 import { ReactComponent as ArrowIcon } from '../../styles/assets/icons/arrow_forward_ios-24px.svg';
 import { ReactComponent as FastArrowIcon } from '../../styles/assets/icons/arrow_fast_forward_ios-24px.svg';
+import { ReactComponent as TargetIcon } from '../../styles/assets/icons/dot-circle-regular.svg';
 import {
   StyledCalendarExpandIcon,
   StyledCalendarContainer,
@@ -21,8 +22,6 @@ import {
   StyledCalendarDay,
   StyledCalendarDayName
 } from './Calendar.styles';
-
-// window.Hebcal = Hebcal;
 
 const getEventText = (
   events: Array<HeEvent>,
@@ -62,16 +61,25 @@ class Calendar extends React.Component<
     activeMonth: number;
     months: Array<Month>;
     holidays: Array<HeEvent>;
+    heNow: HeDay;
+    nowMonthIndex: number;
+    heSelectedDate: HeDay;
   }
 > {
   constructor(props) {
     super(props);
     const year = new Hebcal.GregYear();
+    const now = new Date();
+    const heNow = new Hebcal.HDate();
+    const heSelectedDate = new Hebcal.HDate(props.selectedDate);
     this.state = {
       calendarOpen: false,
-      activeMonth: new Date().getMonth(),
+      activeMonth: now.getMonth(),
       months: year.months,
-      holidays: year.holidays
+      holidays: year.holidays,
+      heNow,
+      heSelectedDate,
+      nowMonthIndex: now.getMonth()
     };
     this.toggleCalendar = this.toggleCalendar.bind(this);
     this.moveMonthUp = this.moveMonthUp.bind(this);
@@ -84,6 +92,22 @@ class Calendar extends React.Component<
     this.getHeMonthName = this.getHeMonthName.bind(this);
     this.renderCalendarMonth = this.renderCalendarMonth.bind(this);
     this.renderDay = this.renderDay.bind(this);
+    this.setDateToNow = this.setDateToNow.bind(this);
+  }
+
+  componentDidUpdate(prevProps: Readonly<CalendarProps>): void {
+    const { selectedDate } = this.props;
+    if (
+      selectedDate.getMonth() !== prevProps.selectedDate.getMonth() ||
+      selectedDate.getFullYear() !== prevProps.selectedDate.getFullYear() ||
+      selectedDate.getDate() !== prevProps.selectedDate.getDate()
+    ) {
+      const heSelectedDate = new Hebcal.HDate(selectedDate);
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({
+        heSelectedDate
+      });
+    }
   }
 
   toggleCalendar(): void {
@@ -108,7 +132,7 @@ class Calendar extends React.Component<
   }
 
   moveMonthDown(): void {
-    const { activeMonth, months, holidays } = this.state;
+    const { activeMonth, months, holidays, nowMonthIndex } = this.state;
     this.setState({ activeMonth: activeMonth - 1 });
     if (activeMonth <= 2) {
       const id = setTimeout(() => {
@@ -116,7 +140,8 @@ class Calendar extends React.Component<
         this.setState({
           months: [...newYear.months, ...months],
           holidays: { ...newYear.holidays, ...holidays },
-          activeMonth: activeMonth + 11
+          activeMonth: activeMonth + 11,
+          nowMonthIndex: nowMonthIndex + 12
         });
         clearTimeout(id);
       }, 600);
@@ -141,7 +166,7 @@ class Calendar extends React.Component<
     this.moveYear(-1);
   }
 
-  renderDay(day: HeDay, isDisable): JSX.Element {
+  renderDay(day: HeDay, isDisable, isNow, isSelected): JSX.Element {
     const { autoCloseOnSelect, onSelectDate } = this.props;
     const key = [day.day, day.month, day.year].join('-');
     const { holidays } = this.state;
@@ -149,6 +174,8 @@ class Calendar extends React.Component<
       <StyledCalendarDay
         key={key}
         isDisable={isDisable}
+        isNow={isNow}
+        isSelected={isSelected}
         onClick={(): void => {
           onSelectDate(day.greg());
           autoCloseOnSelect && this.toggleCalendar();
@@ -163,29 +190,41 @@ class Calendar extends React.Component<
     );
   }
 
-  renderCalendarMonth(month: Month): JSX.Element {
-    let calendarDayIndex = -month.days[0].getDay();
-    const prevMonth = this.state.months[this.state.activeMonth - 1];
-    const nextMonth = this.state.months[this.state.activeMonth + 1];
-    const days: Array<JSX.Element | null> = [];
-    for (let i = calendarDayIndex; i < 0; i += 1) {
-      days.push(
-        prevMonth
-          ? this.renderDay(prevMonth.days[prevMonth.length + i], true)
-          : null
+  renderCalendarMonth(month: Month, index, activeIndex): JSX.Element {
+    const days: Array<JSX.Element> = [];
+    let calendarDayIndex = 0;
+    if (Math.abs(index - activeIndex) > 2) {
+      for (let i = 0; i < 42; i += 1) {
+        days.push(<StyledCalendarDay day={month.days[0]} />);
+      }
+    } else {
+      const { heNow, heSelectedDate } = this.state;
+      const isSameDate = (d1, d2): boolean =>
+        d1.month === d2.month && d1.year === d2.year && d1.day === d2.day;
+      const isNow = (day): boolean => isSameDate(day, heNow);
+      const isSelected = (day): boolean => isSameDate(day, heSelectedDate);
+      calendarDayIndex = -month.days[0].getDay();
+      const prevMonth = this.state.months[this.state.activeMonth - 1];
+      const nextMonth = this.state.months[this.state.activeMonth + 1];
+
+      for (let i = calendarDayIndex; i < 0; i += 1) {
+        const day = prevMonth.days[prevMonth.length + i];
+        days.push(this.renderDay(day, true, isNow(day), isSelected(day)));
+      }
+      month.days.forEach((day) =>
+        days.push(this.renderDay(day, false, isNow(day), isSelected(day)))
       );
-      // days.push(null);
+      for (
+        let i = 0;
+        i < 42 - (month.length + Math.abs(calendarDayIndex));
+        i += 1
+      ) {
+        const day = nextMonth.days[i];
+        days.push(this.renderDay(day, true, isNow(day), isSelected(day)));
+        // days.push(null);
+      }
+      calendarDayIndex = 0;
     }
-    month.days.forEach((day) => days.push(this.renderDay(day, false)));
-    for (
-      let i = 0;
-      i < 42 - (month.length + Math.abs(calendarDayIndex));
-      i += 1
-    ) {
-      days.push(nextMonth ? this.renderDay(nextMonth.days[i], true) : null);
-      // days.push(null);
-    }
-    calendarDayIndex = 0;
     return (
       <StyledCalendarMonth>
         {[0, 1, 2, 3, 4, 5].map((week) => (
@@ -235,15 +274,25 @@ class Calendar extends React.Component<
     return str.join(' ');
   }
 
+  setDateToNow(): void {
+    const { nowMonthIndex, heNow } = this.state;
+    this.setState({
+      activeMonth: nowMonthIndex
+    });
+    this.props.onSelectDate(heNow.greg());
+  }
+
   render(): JSX.Element {
     const { calendarOpen, activeMonth, months } = this.state;
     return (
       <StyledCalendarContainer>
-        {/* <h1>{time.toISOString()}</h1> */}
         <StyledCalendarSelectedDate>
-          <span className="u-abs-center">
-            {this.getSelectedDateText()}
-          </span>
+          <IconButton
+            size={30}
+            iconSrc={TargetIcon}
+            onClick={this.setDateToNow}
+          />
+          <span>{this.getSelectedDateText()}</span>
           <StyledCalendarExpandIcon isOpen={calendarOpen}>
             <IconButton
               size={30}

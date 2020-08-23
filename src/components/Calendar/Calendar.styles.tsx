@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { getColor, getColorRGB } from '../GlobalStyles/utils';
-import { absCenter, mediaQueries } from '../GlobalStyles/mixing';
+import { mediaQueries } from '../GlobalStyles/mixing';
 
 export const StyledCalendarContainer = styled.div`
   overflow: hidden;
@@ -17,21 +17,16 @@ export const StyledCalendarSelectedDate = styled.div`
   text-align: center;
   color: ${(props): string => getColor('white', props)};
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   line-height: 1;
   position: relative;
-  padding: 1rem 0;
+  padding: 1rem 2rem;
   box-shadow: 0 2px 4px
     rgba(${(props): string => getColorRGB('black', props)}, 0.3);
-  .u-abs-center {
-    ${absCenter}
-    width: 100%;
-  }
 `;
 
 export const StyledCalendarExpandIcon = styled.div`
-  margin-right: 2rem;
   .calendar-expand-icon__icon {
     svg {
       transform: rotate(90deg);
@@ -184,6 +179,10 @@ export const StyledCalendarDay = styled.div`
     background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23f9f9fa' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
   `
       : ''}
+  ${(props): string =>
+    props.isNow ? `background-color: ${getColor('secondary', props)};` : ''}
+  ${(props): string =>
+    props.isSelected ? `border: 3px solid ${getColor('primary', props)};` : ''}
 `;
 
 export const StyledCalendarDayName = styled.div`
