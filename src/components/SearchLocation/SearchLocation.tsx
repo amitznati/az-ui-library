@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, IconButton } from '@material-ui/core';
+import { Paper, Fab } from '@material-ui/core';
 import { SearchLocationProps } from './SearchLocation.types';
 import {
   createStyles,
@@ -22,9 +22,12 @@ const useStyles = makeStyles((theme: Theme) =>
     searchInput: {
       margin: '1rem',
       display: 'flex',
+      alignItems: 'center',
       flexDirection: theme.direction === 'rtl' ? 'row-reverse' : 'row'
     },
-    iconButton: {}
+    iconButton: {
+      color: 'white'
+    }
   })
 );
 
@@ -47,13 +50,15 @@ const SearchLocation: React.FC<SearchLocationProps> = ({
         header={(selectedLocation && selectedLocation.name) || 'no location'}
       >
         <div className={classes.searchInput}>
-          <IconButton
-            onClick={onSearchMyLocation}
+          <Fab
+            size="small"
+            color="secondary"
+            aria-label="myLocation"
             className={classes.iconButton}
-            color="primary"
+            onClick={onSearchMyLocation}
           >
             <MyLocationIcon />
-          </IconButton>
+          </Fab>
           <StyledSearchInput
             placeholder="חיפוש לפי עיר..."
             onSearch={onSearch}
