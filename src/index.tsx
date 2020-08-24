@@ -10,4 +10,6 @@ export { default as CssBaseLine } from './components/CssBaseLine/CssBaseLine';
 export { default as ThemeProvider } from './components/ThemeProvider/ThemeProvider';
 export { default as DailyTimeLine } from './components/DailyTimeLine/DailyTimeLine';
 export { default as DayTimeItem } from './components/DayTimeItem/DayTimeItem';
+export { default as SearchLocation } from './components/SearchLocation/SearchLocation';
+export { default as SearchInput } from './components/SearchInput/SearchInput';
 export { hooks };

@@ -22,7 +22,7 @@ export default function MaterialThemeProvider({
     typography: {
       htmlFontSize: 10,
       fontFamily: defaultTheme.fontFamily.join(', '),
-      fontSize: 16
+      fontSize: 20
     }
   });
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;

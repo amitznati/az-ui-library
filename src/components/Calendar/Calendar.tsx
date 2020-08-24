@@ -288,14 +288,14 @@ class Calendar extends React.Component<
       <StyledCalendarContainer>
         <StyledCalendarSelectedDate>
           <IconButton
-            size={30}
+            size={40}
             iconSrc={TargetIcon}
             onClick={this.setDateToNow}
           />
           <span>{this.getSelectedDateText()}</span>
           <StyledCalendarExpandIcon isOpen={calendarOpen}>
             <IconButton
-              size={30}
+              size={40}
               className="calendar-expand-icon__icon"
               iconSrc={ArrowIcon}
               onClick={this.toggleCalendar}
@@ -309,13 +309,13 @@ class Calendar extends React.Component<
                 <IconButton
                   onClick={this.moveYearUp}
                   iconSrc={FastArrowIcon}
-                  size={30}
+                  size={40}
                   className="arrow-up"
                 />
                 <IconButton
                   onClick={this.moveMonthUp}
                   iconSrc={ArrowIcon}
-                  size={30}
+                  size={40}
                   className="arrow-up"
                 />
                 <span>{months[activeMonth].year}</span>
@@ -325,13 +325,13 @@ class Calendar extends React.Component<
                 <IconButton
                   onClick={this.moveMonthDown}
                   iconSrc={ArrowIcon}
-                  size={30}
+                  size={40}
                   className="arrow-down"
                 />
                 <IconButton
                   onClick={this.moveYearDown}
                   iconSrc={FastArrowIcon}
-                  size={30}
+                  size={40}
                   className="arrow-down"
                 />
               </span>

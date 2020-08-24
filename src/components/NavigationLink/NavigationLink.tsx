@@ -6,19 +6,19 @@ import { getColor } from '../GlobalStyles/utils';
 const getSize = (size): string => {
   switch (size) {
     case 'large':
-      return `font-size: 3.1rem;
+      return `font-size: 3.5rem;
     padding: 1rem 2rem;`;
     case 'medium':
-      return `font-size: 2.4rem;
+      return `font-size: 3rem;
     padding: 0.75rem 1.5rem;`;
     case 'small':
-      return `font-size: 1.7rem;
+      return `font-size: 2.5rem;
     padding: 0.5rem 1rem;`;
     case 'tiny':
       return `font-size: 1rem;
     padding: 0.25rem 0.5rem;`;
     default:
-      return `font-size: 2.4rem;
+      return `font-size: 3rem;
     padding: 0.75rem 1.5rem;`;
   }
 };

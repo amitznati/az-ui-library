@@ -13,7 +13,7 @@ export const StyledCalendarContainer = styled.div`
 `;
 
 export const StyledCalendarSelectedDate = styled.div`
-  font-size: 2rem;
+  font-size: 3rem;
   text-align: center;
   color: ${(props): string => getColor('white', props)};
   display: flex;
@@ -21,7 +21,7 @@ export const StyledCalendarSelectedDate = styled.div`
   align-items: center;
   line-height: 1;
   position: relative;
-  padding: 1rem 2rem;
+  padding: 2rem 2rem;
   box-shadow: 0 2px 4px
     rgba(${(props): string => getColorRGB('black', props)}, 0.3);
 `;
@@ -61,13 +61,13 @@ export const StyledCalendarMain = styled.div`
 export const StyledCalendarHeader = styled.div`
   text-align: center;
   padding: 1rem 0;
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   color: ${(props): string => getColor('white', props)};
   line-height: 1.4;
 
   .calendar-header-month {
     display: inline-flex;
-    width: 80%;
+    width: 90%;
     justify-content: space-between;
     .arrow-up {
       svg {
@@ -87,16 +87,14 @@ export const StyledCalendarHeader = styled.div`
 
 export const StyledCalendarWeek = styled.div`
   display: flex;
+  flex-direction: row-reverse;
   justify-content: center;
 `;
 export const StyledCalendarWeekDays = styled(StyledCalendarWeek)`
   background-color: ${(props): string => getColor('white', props)};
-  padding: 0 4rem;
+  padding: 0 1rem;
   margin-bottom: 1rem;
   box-shadow: ${(props): string => props.theme.shadows.hover};
-  ${mediaQueries.phone} {
-    padding: 0 2.5rem;
-  }
 `;
 
 export const StyledCalendarMonthContainer = styled.div`
@@ -167,9 +165,6 @@ export const StyledCalendarDay = styled.div`
     }
   }
 
-  &:nth-of-type(7n + 7) {
-    border-right: 0;
-  }
 
   ${(props): string =>
     props.isDisable

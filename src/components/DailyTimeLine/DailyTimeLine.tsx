@@ -59,7 +59,7 @@ const getStyledDayTimeLineStyle = (props): string => {
     padding: 0 4rem;
     top: ${getTimeTop(getNowTime())}px;
     font-size: 2.6rem;
-    color: black;
+    color: ${getColor('tertiary', props)};
     line-height: 1;
   }
   .daily-times-time-item {
@@ -85,6 +85,7 @@ const StyledDayTimesItem = styled(DayTimeItem)`
   color: white;
   box-shadow: 0 2px 4px white;
   border: none;
+  font-size: 2.6rem;
 `;
 
 const DailyTimeLine: React.FC<DailyTimeLineProps> = ({ dayTimes }) => {

@@ -1,5 +1,10 @@
 import React from 'react';
-import { Paper, Fab } from '@material-ui/core';
+import {
+  Paper,
+  Fab,
+  Accordion,
+  AccordionSummary
+} from '@material-ui/core';
 import { SearchLocationProps } from './SearchLocation.types';
 import {
   createStyles,
@@ -8,8 +13,8 @@ import {
   withStyles
 } from '@material-ui/core/styles';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import Accordion from '../Accordion/Accordion';
 import SearchInput from '../SearchInput/SearchInput';
 import SearchLocationResultsList from './SearchLocationResultsList';
 const useStyles = makeStyles((theme: Theme) =>
@@ -19,23 +24,51 @@ const useStyles = makeStyles((theme: Theme) =>
       // maxWidth: 360,
       backgroundColor: theme.palette.background.paper
     },
-    searchInput: {
+    accordionSummary: {
+      fontSize: '3rem'
+    },
+    searchInputWrap: {
       margin: '1rem',
       display: 'flex',
       alignItems: 'center',
       flexDirection: theme.direction === 'rtl' ? 'row-reverse' : 'row'
     },
+    searchInput: {
+      maxWidth: '80%',
+      margin: '1rem'
+    },
     iconButton: {
-      color: 'white'
+      color: 'white',
+      '&:focus': {
+        outline: 'none'
+      }
+    },
+    expandMoreIcon: {
+      color: 'white',
+      height: '4rem',
+      width: '4rem'
     }
   })
 );
 
-const StyledSearchInput = withStyles({
+const StyledAccordionSummary = withStyles((theme: Theme) => ({
   root: {
-    flexGrow: 1
+    backgroundColor: theme.palette.primary.main,
+    color: 'white',
+    '&.Mui-expanded': {
+      minHeight: 'unset'
+    }
+  },
+  content: {
+    justifyContent: 'center',
+    fontSize: '3rem',
+    margin: 0,
+    '&.Mui-expanded': {
+      margin: 0,
+      minHeight: 'unset'
+    }
   }
-})(SearchInput);
+}))(AccordionSummary);
 const SearchLocation: React.FC<SearchLocationProps> = ({
   onSearch,
   searchResults = [],
@@ -46,12 +79,13 @@ const SearchLocation: React.FC<SearchLocationProps> = ({
   const classes = useStyles();
   return (
     <Paper>
-      <Accordion
-        header={(selectedLocation && selectedLocation.name) || 'no location'}
-      >
-        <div className={classes.searchInput}>
+      <Accordion>
+        <StyledAccordionSummary expandIcon={<ExpandMoreIcon className={classes.expandMoreIcon} />}>
+          {(selectedLocation && selectedLocation.name) || 'no location'}
+        </StyledAccordionSummary>
+        <div className={classes.searchInputWrap}>
           <Fab
-            size="small"
+            size="medium"
             color="secondary"
             aria-label="myLocation"
             className={classes.iconButton}
@@ -59,10 +93,9 @@ const SearchLocation: React.FC<SearchLocationProps> = ({
           >
             <MyLocationIcon />
           </Fab>
-          <StyledSearchInput
-            placeholder="חיפוש לפי עיר..."
-            onSearch={onSearch}
-          />
+          <div className={classes.searchInput}>
+            <SearchInput placeholder="חיפוש לפי עיר..." onSearch={onSearch} />
+          </div>
         </div>
         {searchResults.length > 0 && (
           <SearchLocationResultsList
