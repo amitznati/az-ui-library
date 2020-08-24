@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '2px 4px',
       display: 'flex',
       alignItems: 'center',
-      width: '100%'
+      flexGrow: 1
     },
     input: {
       marginLeft: theme.spacing(1),
@@ -37,6 +37,7 @@ export default function SearchInput({ placeholder, onSearch }): JSX.Element {
       <IconButton
         onClick={(): void => setValue('')}
         className={classes.iconButton}
+        disabled={!value}
       >
         <ClearIcon />
       </IconButton>
@@ -48,6 +49,7 @@ export default function SearchInput({ placeholder, onSearch }): JSX.Element {
       />
       <IconButton
         color="primary"
+        disabled={!value}
         className={classes.iconButton}
         onClick={(): void => onSearch(value)}
       >

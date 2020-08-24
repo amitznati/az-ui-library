@@ -18,7 +18,12 @@ export default function MaterialThemeProvider({
         dark: defaultTheme.colors.secondaryDark
       }
     },
-    direction: defaultTheme.direction
+    direction: defaultTheme.direction,
+    typography: {
+      htmlFontSize: 10,
+      fontFamily: defaultTheme.fontFamily.join(', '),
+      fontSize: 16
+    }
   });
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 }
