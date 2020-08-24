@@ -20,6 +20,7 @@ export default {
     greyDark2: '#333',
     black: '#111111'
   },
+  direction: 'rtl',
   defaultColor: '#777',
   fontFamily: ['Montserrat', 'Assistant'],
   shadows: {

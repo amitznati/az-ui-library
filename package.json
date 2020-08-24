@@ -27,6 +27,8 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
     "hebcal": "^2.3.2",
     "react-slick": "^0.27.9",
     "styled-components": "^5.1.1"
