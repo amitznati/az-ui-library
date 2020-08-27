@@ -96,7 +96,7 @@ const NavigationLink: React.FC<NavigationLinkProps> = ({
       </LinkComp>
     );
   }
-  return <StyledNavigationLink aria-current="page" {...rest} />;
+  return <StyledNavigationLink aria-current="page" {...rest} active={active} />;
 };
 
 export default NavigationLink;

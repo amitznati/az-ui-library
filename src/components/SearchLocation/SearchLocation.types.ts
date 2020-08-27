@@ -1,8 +1,8 @@
 export interface LocationItem {
-  name: string;
+  formattedName: string;
   coords: {
-    lon: number;
-    lat: number;
+    longitude: number;
+    latitude: number;
   };
 }
 export interface SearchLocationProps {

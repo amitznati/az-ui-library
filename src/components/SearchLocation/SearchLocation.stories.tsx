@@ -8,10 +8,10 @@ export default {
 
 export const simpleSearchLocation = () => {
   const locations = [
-    { name: 'דימנה', coords: { lat: 123, lon: 342 } },
-    { name: 'תל אביב', coords: { lat: 1232, lon: 342 } },
-    { name: 'ירושלים', coords: { lat: 1233, lon: 342 } },
-    { name: 'New York', coords: { lat: 1234, lon: 342 } }
+    { formattedName: 'דימנה', coords: { latitude: 123, longitude: 342 } },
+    { formattedName: 'תל אביב', coords: { latitude: 1232, longitude: 342 } },
+    { formattedName: 'ירושלים', coords: { latitude: 1233, longitude: 342 } },
+    { formattedName: 'New York', coords: { latitude: 1234, longitude: 342 } }
   ];
   const [searchResults, setSearchResults] = React.useState<Array<LocationItem>>(
     []

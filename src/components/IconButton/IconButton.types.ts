@@ -8,4 +8,10 @@ export interface IconButtonProps extends LinkHoverProps {
   size: number;
   style?: object;
   className?: string;
+  variant?:
+    | 'primary'
+    | 'secondary'
+    | 'white'
+    | string
+    | { bg: string; text: string };
 }

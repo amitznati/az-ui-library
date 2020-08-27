@@ -7,9 +7,34 @@ import defaultTheme from '../GlobalStyles/defaultTheme';
 
 const getStyledIconButton = (props): string => {
   const theme = { ...defaultTheme, ...props.theme };
+  const { variant } = props;
+  let textColor = props.textColor || getColor('white', props);
+  let textColorHover = props.textColorHover || getColor('primary', props);
+  let backgroundColor = props.backgroundColor || 'transparent';
+  let backgroundColorHover = props.backgroundColorHover || getColor('white', props);
+  if (variant) {
+    switch (variant) {
+      case 'primary': {
+        textColor = getColor('white', props);
+        textColorHover = getColor('primary', props);
+        backgroundColor = getColor('primary', props);
+        backgroundColorHover = getColor('white', props);
+        break;
+      }
+      case 'secondary': {
+        textColor = getColor('black', props);
+        textColorHover = getColor('secondary', props);
+        backgroundColor = getColor('secondary', props);
+        backgroundColorHover = getColor('white', props);
+        break;
+      }
+      default:
+        break;
+    }
+  }
   const activeStyle = `
     background-position: 100%;
-    color: ${props.textColorHover || getColor('primary', props)};
+    color: ${textColorHover};
     box-shadow: ${theme.shadows.active};
   `;
   return `
@@ -22,9 +47,9 @@ const getStyledIconButton = (props): string => {
   color: ${props.textColor || getColor('white', props)};
   background-image: linear-gradient(
     120deg,
-    ${props.backgroundColor || 'transparent'} 0%,
-    ${props.backgroundColor || 'transparent'} 50%,
-    ${props.backgroundColorHover || '#fff'} 51%
+    ${backgroundColor} 0%,
+    ${backgroundColor} 50%,
+    ${backgroundColorHover} 51%
   );
   background-size: 250%;
   transition: all 1s cubic-bezier(0.2, 0.68, 0.09, 1);
@@ -36,7 +61,7 @@ const getStyledIconButton = (props): string => {
       ${activeStyle}
       box-shadow: ${theme.shadows.hover};
       & svg {
-        fill: ${props.textColorHover || getColor('primaryDark', props)};
+        fill: ${textColorHover};
       }
     }
   }
@@ -44,7 +69,7 @@ const getStyledIconButton = (props): string => {
     transition: all 1s cubic-bezier(0.2, 0.68, 0.09, 1);
     height: ${(props.size / 3) * 0.2}rem;
     width: ${(props.size / 3) * 0.2}rem;
-    fill: ${props.textColor || getColor('white', props)};
+    fill: ${textColor};
   }
   &:active {
       ${activeStyle}

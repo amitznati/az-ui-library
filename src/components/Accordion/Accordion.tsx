@@ -19,7 +19,7 @@ const getStyledAccordion = (props): string => {
     align-items: center;
     line-height: 1;
     position: relative;
-    padding: 1rem 0;
+    padding: 2rem;
     box-shadow: 0 2px 4px rgba(0 ,0 ,0 , 0.3);
     background-color: ${getColor('primary', props)};
     .u-abs-center {
@@ -28,7 +28,6 @@ const getStyledAccordion = (props): string => {
     }
   }
   .accordion-expand-icon {
-    margin-right: 2rem;
     svg {
       transform: rotate(${props.isOpen ? '-' : ''}90deg);
     }
@@ -90,8 +89,9 @@ export class Accordion extends React.Component<
           <span className="u-abs-center">{header}</span>
           <div className="accordion-expand-icon">
             <IconButton
-              size={30}
+              size={40}
               iconSrc={ArrowIcon}
+              // variant="secondary"
               onClick={this.toggleAccordion}
             />
           </div>

@@ -1,20 +1,10 @@
 import React from 'react';
-import {
-  Paper,
-  Fab,
-  Accordion,
-  AccordionSummary
-} from '@material-ui/core';
+import { Paper, Fab } from '@material-ui/core';
 import { SearchLocationProps } from './SearchLocation.types';
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-  withStyles
-} from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import Accordion from '../Accordion/Accordion';
 import SearchInput from '../SearchInput/SearchInput';
 import SearchLocationResultsList from './SearchLocationResultsList';
 const useStyles = makeStyles((theme: Theme) =>
@@ -51,24 +41,24 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const StyledAccordionSummary = withStyles((theme: Theme) => ({
-  root: {
-    backgroundColor: theme.palette.primary.main,
-    color: 'white',
-    '&.Mui-expanded': {
-      minHeight: 'unset'
-    }
-  },
-  content: {
-    justifyContent: 'center',
-    fontSize: '3rem',
-    margin: 0,
-    '&.Mui-expanded': {
-      margin: 0,
-      minHeight: 'unset'
-    }
-  }
-}))(AccordionSummary);
+// const StyledAccordionSummary = withStyles((theme: Theme) => ({
+//   root: {
+//     backgroundColor: theme.palette.primary.main,
+//     color: 'white',
+//     '&.Mui-expanded': {
+//       minHeight: 'unset'
+//     }
+//   },
+//   content: {
+//     justifyContent: 'center',
+//     fontSize: '3rem',
+//     margin: 0,
+//     '&.Mui-expanded': {
+//       margin: 0,
+//       minHeight: 'unset'
+//     }
+//   }
+// }))(AccordionSummary);
 const SearchLocation: React.FC<SearchLocationProps> = ({
   onSearch,
   searchResults = [],
@@ -79,10 +69,11 @@ const SearchLocation: React.FC<SearchLocationProps> = ({
   const classes = useStyles();
   return (
     <Paper>
-      <Accordion>
-        <StyledAccordionSummary expandIcon={<ExpandMoreIcon className={classes.expandMoreIcon} />}>
-          {(selectedLocation && selectedLocation.name) || 'no location'}
-        </StyledAccordionSummary>
+      <Accordion
+        header={
+          (selectedLocation && selectedLocation.formattedName) || 'no location'
+        }
+      >
         <div className={classes.searchInputWrap}>
           <Fab
             size="medium"

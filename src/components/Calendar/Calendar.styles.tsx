@@ -4,16 +4,11 @@ import { mediaQueries } from '../GlobalStyles/mixing';
 
 export const StyledCalendarContainer = styled.div`
   overflow: hidden;
-  max-width: 55rem;
-  background-image: linear-gradient(
-    to bottom,
-    ${(props): string => getColor('primary', props)} 0%,
-    rgba(${(props): string => getColorRGB('primaryDark', props)}, 0.8) 100%
-  );
+  background-color: ${(props): string => getColor('primary', props)};
 `;
 
 export const StyledCalendarSelectedDate = styled.div`
-  font-size: 3rem;
+  font-size: 2rem;
   text-align: center;
   color: ${(props): string => getColor('white', props)};
   display: flex;
@@ -21,7 +16,7 @@ export const StyledCalendarSelectedDate = styled.div`
   align-items: center;
   line-height: 1;
   position: relative;
-  padding: 2rem 2rem;
+  padding: 2rem;
   box-shadow: 0 2px 4px
     rgba(${(props): string => getColorRGB('black', props)}, 0.3);
 `;

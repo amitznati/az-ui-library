@@ -33,12 +33,12 @@ export default function SearchLocationResultsList({
           <ListItem
             button
             onClick={(): void => onSelectLocation(item)}
-            key={item.coords.lat + item.coords.lon}
+            key={item.coords.latitude + item.coords.longitude}
             className={classes.listItem}
           >
             <ListItemText
               className={classes.listItemText}
-              primary={item.name}
+              primary={item.formattedName}
             />
           </ListItem>
         ))}

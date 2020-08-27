@@ -13,7 +13,7 @@ const StyledAppBar = styled.div`
   height: 13rem;
   width: 100%;
   background-color: ${(props): string => getColor('primary', props)};
-  box-shadow: 0 0.2rem 1rem ${(props): string => getColor('primary', props)};
+  box-shadow: 0 0.2rem 1rem ${(props): string => getColor('black', props)};
   z-index: 1500;
   @media (max-width: 37.5em) {
     height: 8rem;
